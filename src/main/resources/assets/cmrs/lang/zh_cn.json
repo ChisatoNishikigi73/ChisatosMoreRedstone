@@ -1,0 +1,12 @@
+{
+ "itemGroup.cmrs_tab": "Chisato的更多红石",
+
+
+  "block.cmrs.and_gate": "与门",
+  "block.cmrs.nand_gate": "与非门",
+  "block.cmrs.nor_gate": "或非门",
+  "block.cmrs.not_gate": "非门",
+  "block.cmrs.or_gate": "或门",
+  "block.cmrs.xnor_gate": "同或门",
+  "block.cmrs.xor_gate": "异或门"
+}

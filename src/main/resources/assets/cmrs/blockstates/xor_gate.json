@@ -1,0 +1,23 @@
+{
+  "variants": {
+    "facing=north,left_input=false,right_input=false": { "model": "cmrs:block/xorgate" },
+    "facing=north,left_input=true,right_input=false": { "model": "cmrs:block/xorgate_l"},
+    "facing=north,left_input=false,right_input=true": { "model": "cmrs:block/xorgate_r"},
+    "facing=north,left_input=true,right_input=true": { "model": "cmrs:block/xorgate_lr"},
+
+    "facing=east,left_input=false,right_input=false": { "model": "cmrs:block/xorgate", "y": 90 },
+    "facing=east,left_input=true,right_input=false": { "model": "cmrs:block/xorgate_l", "y": 90 },
+    "facing=east,left_input=false,right_input=true": { "model": "cmrs:block/xorgate_r", "y": 90 },
+    "facing=east,left_input=true,right_input=true": { "model": "cmrs:block/xorgate_lr", "y": 90 },
+
+    "facing=south,left_input=false,right_input=false": { "model": "cmrs:block/xorgate", "y": 180 },
+    "facing=south,left_input=true,right_input=false": { "model": "cmrs:block/xorgate_l", "y": 180 },
+    "facing=south,left_input=false,right_input=true": { "model": "cmrs:block/xorgate_r", "y": 180 },
+    "facing=south,left_input=true,right_input=true": { "model": "cmrs:block/xorgate_lr", "y": 180 },
+
+    "facing=west,left_input=false,right_input=false": { "model": "cmrs:block/xorgate", "y": 270 },
+    "facing=west,left_input=true,right_input=false": { "model": "cmrs:block/xorgate_l", "y": 270 },
+    "facing=west,left_input=false,right_input=true": { "model": "cmrs:block/xorgate_r", "y": 270 },
+    "facing=west,left_input=true,right_input=true": { "model": "cmrs:block/xorgate_lr", "y": 270 }
+  }
+}

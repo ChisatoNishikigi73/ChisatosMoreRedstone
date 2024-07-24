@@ -1,0 +1,12 @@
+{
+  "itemGroup.cmrs": "Chisato's More Redstone",
+
+
+  "block.cmrs.and_gate": "AND Gate",
+  "block.cmrs.nand_gate": "NAND Gate",
+  "block.cmrs.nor_gate": "NOR Gate",
+  "block.cmrs.not_gate": "NOT Gate",
+  "block.cmrs.or_gate": "OR Gate",
+  "block.cmrs.xnor_gate": "XNOR Gate",
+  "block.cmrs.xor_gate": "XOR Gate"
+}
