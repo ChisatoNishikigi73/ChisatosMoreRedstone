@@ -18,6 +18,7 @@ public class BlockEntitiesInit {
     public static final RegistryObject<BlockEntityType<XNORGateBlockEntity>> XNOR_GATE = BLOCK_ENTITIES.register("xnor_gate", () -> BlockEntityType.Builder.of(XNORGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<NANDGateBlockEntity>> NAND_GATE = BLOCK_ENTITIES.register("nand_gate", () -> BlockEntityType.Builder.of(NANDGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<NORGateBlockEntity>> NOR_GATE = BLOCK_ENTITIES.register("nor_gate", () -> BlockEntityType.Builder.of(NORGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<CrossGateBlockEntity>> CROSS_GATE = BLOCK_ENTITIES.register("cross_gate", () -> BlockEntityType.Builder.of(CrossGateBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

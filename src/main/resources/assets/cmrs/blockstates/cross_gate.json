@@ -1,0 +1,20 @@
+{
+  "variants": {
+    "north_powered=false,south_powered=false,west_powered=false,east_powered=false": { "model": "cmrs:block/cross_gate_00" },
+    "north_powered=false,south_powered=false,west_powered=false,east_powered=true": { "model": "cmrs:block/cross_gate_01" },
+    "north_powered=false,south_powered=false,west_powered=true,east_powered=false": { "model": "cmrs:block/cross_gate_01" },
+    "north_powered=false,south_powered=false,west_powered=true,east_powered=true": { "model": "cmrs:block/cross_gate_01" },
+    "north_powered=false,south_powered=true,west_powered=false,east_powered=false": { "model": "cmrs:block/cross_gate_10" },
+    "north_powered=false,south_powered=true,west_powered=false,east_powered=true": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=false,south_powered=true,west_powered=true,east_powered=false": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=false,south_powered=true,west_powered=true,east_powered=true": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=false,west_powered=false,east_powered=false": { "model": "cmrs:block/cross_gate_10" },
+    "north_powered=true,south_powered=false,west_powered=false,east_powered=true": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=false,west_powered=true,east_powered=false": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=false,west_powered=true,east_powered=true": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=true,west_powered=false,east_powered=false": { "model": "cmrs:block/cross_gate_10" },
+    "north_powered=true,south_powered=true,west_powered=false,east_powered=true": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=true,west_powered=true,east_powered=false": { "model": "cmrs:block/cross_gate_11" },
+    "north_powered=true,south_powered=true,west_powered=true,east_powered=true": { "model": "cmrs:block/cross_gate_11" }
+  }
+}

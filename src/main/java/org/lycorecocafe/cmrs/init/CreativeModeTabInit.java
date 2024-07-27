@@ -8,7 +8,6 @@ public class CreativeModeTabInit {
     public static final CreativeModeTab CMRS_TAB = new CreativeModeTab("cmrs_tab") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Items.REDSTONE); // 这里可以替换成你的方块或物品
-        }
+            return new ItemStack(Items.REDSTONE); }
     };
 }

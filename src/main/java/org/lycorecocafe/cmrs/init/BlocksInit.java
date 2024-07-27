@@ -11,7 +11,9 @@ import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blocks.diode2block.NOTGateBlock;
+import org.lycorecocafe.cmrs.blocks.tetrode4block.CrossGateBlock;
 import org.lycorecocafe.cmrs.blocks.triode3block.*;
+import org.lycorecocafe.cmrs.items.RedstoneDetectorItem;
 
 public class BlocksInit {
 
@@ -25,6 +27,7 @@ public class BlocksInit {
     public static final RegistryObject<Block> XNOR_GATE = BLOCKS.register("xnor_gate", () -> new XNORGateBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F)));
     public static final RegistryObject<Block> NAND_GATE = BLOCKS.register("nand_gate", () -> new NANDGateBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F)));
     public static final RegistryObject<Block> NOR_GATE = BLOCKS.register("nor_gate", () -> new NORGateBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F)));
+    public static final RegistryObject<Block> CROSS_GATE = BLOCKS.register("cross_gate", () -> new CrossGateBlock(BlockBehaviour.Properties.of(Material.METAL).strength(3.5F)));
 
 
     public static final RegistryObject<Item> AND_GATE_ITEM = ITEMS.register("and_gate", () -> new BlockItem(AND_GATE.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
@@ -34,6 +37,8 @@ public class BlocksInit {
     public static final RegistryObject<Item> XNOR_GATE_ITEM = ITEMS.register("xnor_gate", () -> new BlockItem(XNOR_GATE.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
     public static final RegistryObject<Item> NAND_GATE_ITEM = ITEMS.register("nand_gate", () -> new BlockItem(NAND_GATE.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
     public static final RegistryObject<Item> NOR_GATE_ITEM = ITEMS.register("nor_gate", () -> new BlockItem(NOR_GATE.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
+    public static final RegistryObject<Item> CROSS_GATE_ITEM = ITEMS.register("cross_gate", () -> new BlockItem(CROSS_GATE.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
+    public static final RegistryObject<Item> REDSTONE_DETECTOR = ITEMS.register("redstone_detector", () -> new RedstoneDetectorItem(new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
 
 
     public static void register(IEventBus eventBus) {

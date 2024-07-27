@@ -8,5 +8,8 @@
   "block.cmrs.not_gate": "非门",
   "block.cmrs.or_gate": "或门",
   "block.cmrs.xnor_gate": "同或门",
-  "block.cmrs.xor_gate": "异或门"
+  "block.cmrs.xor_gate": "异或门",
+ "block.cmrs.cross_gate": "红石桥",
+
+ "item.cmrs.redstone_detector": "红石网络探测器"
 }
