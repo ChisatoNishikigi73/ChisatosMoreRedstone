@@ -9,7 +9,9 @@
   "block.cmrs.or_gate": "或门",
   "block.cmrs.xnor_gate": "同或门",
   "block.cmrs.xor_gate": "异或门",
- "block.cmrs.cross_gate": "红石桥",
+  "block.cmrs.cross_gate": "红石桥",
+  "block.cmrs.signal_emitter": "红石信号发射终端",
+  "block.cmrs.signal_receiver": "红石信号接收器",
 
  "item.cmrs.redstone_detector": "红石网络探测器"
 }

@@ -1,5 +1,5 @@
 {
-  "itemGroup.cmrs": "Chisato's More Redstone",
+  "itemGroup.cmrs_tab": "Chisato's More Redstone",
 
 
   "block.cmrs.and_gate": "AND Gate",
@@ -10,6 +10,8 @@
   "block.cmrs.xnor_gate": "XNOR Gate",
   "block.cmrs.xor_gate": "XOR Gate",
   "block.cmrs.cross_gate": "Redstone Bridge",
+  "block.cmrs.signal_emitter": "Signal Emitter",
+  "block.cmrs.signal_receiver": "Signal Receiver",
 
   "item.cmrs.redstone_detector": "Redstone Network Detector"
 }

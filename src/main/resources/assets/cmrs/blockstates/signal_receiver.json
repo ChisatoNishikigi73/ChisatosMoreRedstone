@@ -1,0 +1,15 @@
+{
+  "variants": {
+    "facing=north,powered=false": { "model": "cmrs:block/signal_receiver_off"},
+    "facing=north,powered=true": { "model": "cmrs:block/signal_receiver"},
+
+    "facing=east,powered=false": { "model": "cmrs:block/signal_receiver_off", "y": 90 },
+    "facing=east,powered=true": { "model": "cmrs:block/signal_receiver", "y": 90 },
+
+    "facing=south,powered=false": { "model": "cmrs:block/signal_receiver_off", "y": 180 },
+    "facing=south,powered=true": { "model": "cmrs:block/signal_receiver", "y": 180 },
+
+    "facing=west,powered=false": { "model": "cmrs:block/signal_receiver_off", "y": 270 },
+    "facing=west,powered=true": { "model": "cmrs:block/signal_receiver", "y": 270 }
+  }
+}

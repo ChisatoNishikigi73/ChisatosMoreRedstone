@@ -7,28 +7,24 @@ import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.RedstoneTorchBlock;
 import net.minecraft.world.level.block.state.BlockState;
-import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
 
-@Mixin(RedStoneWireBlock.class)
+//@Mixin(RedStoneWireBlock.class)
 public abstract class RedstoneWireBlockMixin {
 
     private static final int MAX_RANGE = 16;
 
-    @Inject(method = "neighborChanged", at = @At("HEAD"))
-    private void onNeighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify, CallbackInfo ci) {
-        Set<Block> blacklist = new HashSet<>();  // 在这里定义你的黑名单
-        SignalSource signalSource = findRedstoneSignalSource(world, pos, MAX_RANGE, blacklist);
-        if (signalSource != null && !signalSource.signalSources.isEmpty()) {
-            System.out.println("Redstone block at " + pos + " is powered by one of the signal sources: " + signalSource.signalSources);
-        }
-    }
+//    @Inject(method = "neighborChanged", at = @At("HEAD"))
+//    private void onNeighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean notify, CallbackInfo ci) {
+//        Set<Block> blacklist = new HashSet<>();  // 在这里定义你的黑名单
+//        SignalSource signalSource = findRedstoneSignalSource(world, pos, MAX_RANGE, blacklist);
+//        if (signalSource != null && !signalSource.signalSources.isEmpty()) {
+//            System.out.println("Redstone block at " + pos + " is powered by one of the signal sources: " + signalSource.signalSources);
+//        }
+//    }
 
     public static SignalSource findRedstoneSignalSource(Level world, BlockPos startPos, int maxRange, Set<Block> blacklist) {
         Set<BlockPos> visited = new HashSet<>();
