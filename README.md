@@ -4,6 +4,8 @@ This module introduces more interesting redstone devices from the original redst
 
 - Wireless Redstone
 
+![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/2ef3ee6b532e68f654f1a984e49015b43aaf0264.png)
+
 ![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/fca30d2b036952e13562618e19674f7c487f48eb.gif)
 
 ![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/0264b341028b41d4b5bf756b4c6a795c9145854c.gif)
