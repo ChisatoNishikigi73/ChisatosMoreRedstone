@@ -1,6 +1,13 @@
 ### Chisato's More Redstone
 
-This mod introduces more fun redstone devices from the original redstone system, such as AND gates, OR gates, XOR gates and other logic gates. It is also planned to add more fun redstone systems in the future, such as password gates, remote redstone signals, etc. This mod is still in the testing stage
+This module introduces more interesting redstone devices from the original redstone system, such as remote redstone control systems, AND gates, OR gates, XOR gates, and other logic gates. We plan to add more interesting redstone systems in the future, such as password gates, screening systems, etc. This module is still in the testing phase
+
+- Wireless Redstone
+
+![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/fca30d2b036952e13562618e19674f7c487f48eb.gif)
+
+![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/0264b341028b41d4b5bf756b4c6a795c9145854c.gif)
+
 
 - AND Gate and OR Gate
 
