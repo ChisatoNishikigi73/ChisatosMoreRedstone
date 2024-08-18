@@ -1,9 +1,23 @@
+buildscript {
+    repositories {
+        // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
+        mavenCentral()
+        jcenter()
+    }
+    dependencies {
+        classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
+    }
+}
+
 plugins {
     id 'eclipse' // Eclipse IDE 插件
     id 'idea' // IntelliJ IDEA 插件
     id 'maven-publish' // Maven 发布插件
     id 'net.minecraftforge.gradle' version '[6.0,6.2)' // ForgeGradle 插件，指定版本范围
 }
+
+apply plugin: 'org.spongepowered.mixin'
 
 version = mod_version
 group = mod_group_id
@@ -69,6 +83,14 @@ minecraft {
 // 包含由数据生成器生成的资源
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+
+    config "${mod_id}.mixins.json"
+    debug.export = true
+
+}
+
 repositories {
     //m/aven { url "https://cubicinterpolation.net/maven/" }
     // 在此处添加依赖项的 Maven 仓库
@@ -77,6 +99,7 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}" // 指定使用的 Minecraft 版本
     implementation "org.spongepowered:mixin:0.8.5-SNAPSHOT" // 添加 Mixin 依赖项
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor' // Mixin
 }
 
 // 配置资源处理任务，以便在指定资源目标中扩展所有声明的替换属性
