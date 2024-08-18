@@ -18,10 +18,7 @@ import net.minecraftforge.registries.ForgeRegistries;
 import org.lycorecocafe.cmrs.init.BlockEntitiesInit;
 import org.lycorecocafe.cmrs.init.BlocksInit;
 import org.lycorecocafe.cmrs.init.MenuInit;
-import org.lycorecocafe.cmrs.network.ApplySignalPaket;
-import org.lycorecocafe.cmrs.network.ClearSignalPaket;
-import org.lycorecocafe.cmrs.network.SignalEmitterPacket;
-import org.lycorecocafe.cmrs.network.SignalReceiverPacket;
+import org.lycorecocafe.cmrs.network.*;
 import org.slf4j.Logger;
 
 import static org.apache.http.params.CoreProtocolPNames.PROTOCOL_VERSION;
@@ -58,6 +55,7 @@ public class CMRS
         CHANNEL.registerMessage(1, SignalReceiverPacket.class, SignalReceiverPacket::toBytes, SignalReceiverPacket::new, SignalReceiverPacket::handle);
         CHANNEL.registerMessage(2, ApplySignalPaket.class, ApplySignalPaket::toBytes, ApplySignalPaket::new, ApplySignalPaket::handle);
         CHANNEL.registerMessage(3, ClearSignalPaket.class, ClearSignalPaket::toBytes, ClearSignalPaket::new, ClearSignalPaket::handle);
+        CHANNEL.registerMessage(4, PlaySoundTestPacket.class, PlaySoundTestPacket::toBytes, PlaySoundTestPacket::new, PlaySoundTestPacket::handle);
 
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");

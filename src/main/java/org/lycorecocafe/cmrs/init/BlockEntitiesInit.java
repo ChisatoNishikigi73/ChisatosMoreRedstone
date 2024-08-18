@@ -18,9 +18,11 @@ public class BlockEntitiesInit {
     public static final RegistryObject<BlockEntityType<XNORGateBlockEntity>> XNOR_GATE = BLOCK_ENTITIES.register("xnor_gate", () -> BlockEntityType.Builder.of(XNORGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<NANDGateBlockEntity>> NAND_GATE = BLOCK_ENTITIES.register("nand_gate", () -> BlockEntityType.Builder.of(NANDGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<NORGateBlockEntity>> NOR_GATE = BLOCK_ENTITIES.register("nor_gate", () -> BlockEntityType.Builder.of(NORGateBlockEntity::new, BlocksInit.XOR_GATE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<CrossGateBlockEntity>> CROSS_GATE = BLOCK_ENTITIES.register("cross_gate", () -> BlockEntityType.Builder.of(CrossGateBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SignalEmitterBlockEntity>> SIGNAL_EMITTER_BE = BLOCK_ENTITIES.register("signal_emitter_be", () -> BlockEntityType.Builder.of(SignalEmitterBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
-    public static final RegistryObject<BlockEntityType<SignalReceiverBlockEntity>> SIGNAL_RECEIVER_BE = BLOCK_ENTITIES.register("signal_receiver_be", () -> BlockEntityType.Builder.of(SignalReceiverBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<CrossGateBlockEntity>> CROSS_GATE_BE = BLOCK_ENTITIES.register("cross_gate", () -> BlockEntityType.Builder.of(CrossGateBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SignalEmitterBlockEntity>> SIGNAL_EMITTER_BE = BLOCK_ENTITIES.register("signal_emitter_be", () -> BlockEntityType.Builder.of(SignalEmitterBlockEntity::new, BlocksInit.SIGNAL_EMITTER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SignalReceiverBlockEntity>> SIGNAL_RECEIVER_BE = BLOCK_ENTITIES.register("signal_receiver_be", () -> BlockEntityType.Builder.of(SignalReceiverBlockEntity::new, BlocksInit.SIGNAL_RECEIVER.get()).build(null));
+    public static final RegistryObject<BlockEntityType<SignalReceiverBlockEntity>> MUSIC_BOX_BE = BLOCK_ENTITIES.register("music_box_be", () -> BlockEntityType.Builder.of(SignalReceiverBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
+
     public static void register(IEventBus eventBus) {
         BLOCK_ENTITIES.register(eventBus);
     }

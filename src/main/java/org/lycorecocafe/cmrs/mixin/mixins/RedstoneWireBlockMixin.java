@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.mixin;
+package org.lycorecocafe.cmrs.mixin.mixins;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;

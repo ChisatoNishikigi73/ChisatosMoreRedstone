@@ -13,7 +13,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.NotNull;
-import org.lycorecocafe.cmrs.mixin.RedstoneWireBlockMixin;
+import org.lycorecocafe.cmrs.mixin.mixins.RedstoneWireBlockMixin;
 
 public class RedstoneDetectorItem extends Item {
 

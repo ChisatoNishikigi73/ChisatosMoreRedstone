@@ -14,7 +14,7 @@ import org.lycorecocafe.cmrs.init.BlocksInit;
 import java.util.HashSet;
 import java.util.Set;
 
-import static org.lycorecocafe.cmrs.mixin.RedstoneWireBlockMixin.hasRedstoneSignalSourceWithDirection;
+import static org.lycorecocafe.cmrs.mixin.mixins.RedstoneWireBlockMixin.hasRedstoneSignalSourceWithDirection;
 
 public class CrossGateBlockEntity extends BlockEntity implements BlockEntityTicker<CrossGateBlockEntity> {
     private static final Set<Block> BLACKLIST = new HashSet<>();  // 定义黑名单
@@ -24,7 +24,7 @@ public class CrossGateBlockEntity extends BlockEntity implements BlockEntityTick
     }
 
     public CrossGateBlockEntity(BlockPos pos, BlockState state) {
-        super(BlockEntitiesInit.CROSS_GATE.get(), pos, state);
+        super(BlockEntitiesInit.CROSS_GATE_BE.get(), pos, state);
     }
 
     //TODO:More detailed detection, such as through various gates, CROSS-GATE with input on the other end, etc
