@@ -2,7 +2,6 @@ package org.lycorecocafe.cmrs.client.gui.menu;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
-import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -18,7 +17,7 @@ public class MusicBoxMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
 
     public MusicBoxMenu(int id, Inventory playerInventory, FriendlyByteBuf extraData) {
-        this(id, playerInventory, getBlockEntityFromBuf(extraData, playerInventory.player.level));
+        this(id, playerInventory, (MusicBoxBlockEntity) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()));
     }
 
     public MusicBoxMenu(int id, Inventory playerInventory, MusicBoxBlockEntity blockEntity) {
@@ -38,10 +37,6 @@ public class MusicBoxMenu extends AbstractContainerMenu {
 
     public MusicBoxBlockEntity getBlockEntity() {
         return blockEntity;
-    }
-
-    public ServerLevel getServerLevel() {
-        return (ServerLevel) blockEntity.getLevel();
     }
 
     @Override

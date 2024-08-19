@@ -23,17 +23,17 @@ import org.jetbrains.annotations.Nullable;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 
 public class MusicBoxBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
+    protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 16.0D, 16.0D);
+
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
 
     public MusicBoxBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
         );
-    }
-
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE;
     }
 
     @Override
@@ -63,7 +63,7 @@ public class MusicBoxBlock extends HorizontalDirectionalBlock implements EntityB
 //    public boolean isSignalSource(BlockState state) {
 //        return true;
 //    }
-//
+
 //    @Override
 //    public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
 ////        System.out.println("neighborChanged");
@@ -71,8 +71,8 @@ public class MusicBoxBlock extends HorizontalDirectionalBlock implements EntityB
 ////            System.out.println(world);
 //            boolean isPowered = world.hasNeighborSignal(pos);
 //            BlockEntity blockEntity = world.getBlockEntity(pos);
-//            if (blockEntity instanceof SignalEmitterBlockEntity) {
-//                ((SignalEmitterBlockEntity) blockEntity).onRedstoneSignalChanged(world, isPowered);
+//            if (blockEntity instanceof MusicBoxBlockEntity) {
+//                ((MusicBoxBlockEntity) blockEntity).onRedstoneSignalChanged(world, isPowered);
 //            }
 //        }
 //    }

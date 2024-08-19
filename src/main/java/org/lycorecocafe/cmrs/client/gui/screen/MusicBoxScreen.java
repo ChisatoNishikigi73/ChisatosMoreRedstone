@@ -10,11 +10,12 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
 import org.lycorecocafe.cmrs.CMRS;
+import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 import org.lycorecocafe.cmrs.client.gui.menu.MusicBoxMenu;
+import org.lycorecocafe.cmrs.network.MusicPlayerPacket;
+import org.lycorecocafe.cmrs.network.MusicPlayerPlayPacket;
 import org.lycorecocafe.cmrs.utils.music.MusicPlayer;
 import org.slf4j.Logger;
-
-import java.util.Objects;
 
 public class MusicBoxScreen extends AbstractContainerScreen<MusicBoxMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/signal_emitter.png");
@@ -32,43 +33,42 @@ public class MusicBoxScreen extends AbstractContainerScreen<MusicBoxMenu> {
         super.init();
         int centerX = this.width / 2;
         int centerY = this.height / 2;
-        MusicPlayer musicPlayer = menu.getBlockEntity().getMusicPlayer();
+        MusicBoxBlockEntity blockEntity = menu.getBlockEntity();
+
+        // 显示“Music Url(.ogg)”的标题，按钮不可点击
+        Component titleText = Component.literal("Music Url(.ogg)");
 
         // 初始化输入框
         this.inputBox = new EditBox(this.font, centerX - 65, centerY - 35, 130, 20, Component.literal(""));
         this.inputBox.setMaxLength(256);
-        this.addRenderableWidget(this.inputBox);
+        inputBox.setValue(blockEntity.getMusicUrl());
 
         // 初始化下载按钮
-        this.downLoadButton = new Button(centerX - 50, centerY - 10, 100, 20, Component.literal("Download"), button -> {
-            // 如果输入的 URL 与当前音乐的 URL 相同，则不进行操作
-            if (Objects.equals(inputBox.getValue(), musicPlayer.getMusicUrl())) return;
-            musicPlayer.setMusicUrl(inputBox.getValue());
-            musicPlayer.downloadMusic();
+        this.downLoadButton = new Button(centerX - 50, centerY - 10, 100, 20, Component.literal("Set Url"), button -> {
+            blockEntity.setMusicUrl(inputBox.getValue());
+            blockEntity.setStatus(MusicPlayer.STATUS.URL);
+            CMRS.CHANNEL.sendToServer(new MusicPlayerPacket(menu.getBlockEntity().getBlockPos(), blockEntity.getMusicUrl(), blockEntity.getStatus()));
         });
 
         // 初始化播放按钮
         this.playButton = new Button(centerX - 50, centerY + 35, 100, 20, Component.literal("Play"), button -> {
-            MusicPlayer.STATUS status = menu.getBlockEntity().getMusicPlayer().getStatus();
-            switch (status) {
-                case PLAYING -> {
-                    musicPlayer.stopSound();
-                    break;
-                }
-                case PAUSE, STOPPING -> {
-                    musicPlayer.play();
-                    break;
-                }
+            if (blockEntity.getStatus().equals(MusicPlayer.STATUS.NONE) || blockEntity.getStatus().equals(MusicPlayer.STATUS.ERROR))
+                return;
+
+            if (blockEntity.getStatus().equals(MusicPlayer.STATUS.PLAYING)) {
+                CMRS.CHANNEL.sendToServer(new MusicPlayerPlayPacket(menu.getBlockEntity().getBlockPos(), blockEntity.getMusicUrl(), MusicPlayer.STATUS.PAUSE));
+            } else if (blockEntity.getStatus().equals(MusicPlayer.STATUS.PAUSE) || blockEntity.getStatus().equals(MusicPlayer.STATUS.URL)) {
+                CMRS.CHANNEL.sendToServer(new MusicPlayerPlayPacket(menu.getBlockEntity().getBlockPos(), blockEntity.getMusicUrl(), MusicPlayer.STATUS.PLAYING));
             }
+
+//            CMRS.CHANNEL.sendToServer(new MusicPlayerPlayPacket(menu.getBlockEntity().getBlockPos(), blockEntity.getMusicUrl(), blockEntity.getStatus()));
         });
 
-        this.addRenderableWidget(this.playButton);
-        this.addRenderableWidget(this.downLoadButton);
-
-        // 显示“Music Url(.ogg)”的标题，按钮不可点击
-        Component titleText = Component.literal("Music Url(.ogg)");
         this.addRenderableWidget(new Button(centerX - 50, centerY - 60, 100, 20, titleText, button -> {
         })).active = false;
+        this.addRenderableWidget(this.inputBox);
+        this.addRenderableWidget(this.playButton);
+        this.addRenderableWidget(this.downLoadButton);
     }
 
     @Override
@@ -86,18 +86,18 @@ public class MusicBoxScreen extends AbstractContainerScreen<MusicBoxMenu> {
         this.renderTooltip(matrixStack, mouseX, mouseY);
 
         // 根据音乐播放器的状态更新播放按钮的文本和状态
-        MusicPlayer.STATUS status = menu.getBlockEntity().getMusicPlayer().getStatus();
+        MusicPlayer.STATUS status = menu.getBlockEntity().getStatus();
         Component playButtonC = switch (status) {
             case PLAYING -> Component.literal("Pause");
             case PAUSE -> Component.literal("Play");
-            default -> Component.literal("DE");
+            default -> Component.literal("Play");
         };
         this.playButton.setMessage(playButtonC);
-        this.playButton.active = status != MusicPlayer.STATUS.DOWNLOADING && status != MusicPlayer.STATUS.NONE && status != MusicPlayer.STATUS.ERROR;
+//        this.playButton.active = status != MusicPlayer.STATUS.DOWNLOADING && status != MusicPlayer.STATUS.NONE && status != MusicPlayer.STATUS.ERROR;
 
         // 显示音乐状态
         drawCenteredString(matrixStack, this.font, "Music Status:", this.width / 2, this.height / 2 + 13, 4210752);
-        drawCenteredString(matrixStack, this.font, menu.getBlockEntity().getMusicPlayer().getStatus().toString(), this.width / 2, this.height / 2 + 23, 4210752);
+        drawCenteredString(matrixStack, this.font, menu.getBlockEntity().getStatusLocal().toString(), this.width / 2, this.height / 2 + 23, 4210752);
     }
 
     @Override

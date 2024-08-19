@@ -12,8 +12,11 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import org.lycorecocafe.cmrs.CMRS;
+import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 import org.lycorecocafe.cmrs.mixin.SoundEngineHelper;
 import org.lycorecocafe.cmrs.mixin.mixins.client.SoundManagerMixin;
+import org.lycorecocafe.cmrs.network.MusicPlayerStatusChangedPacket;
 import org.slf4j.Logger;
 
 import java.io.ByteArrayInputStream;
@@ -26,15 +29,17 @@ import static org.lycorecocafe.cmrs.utils.music.NetworkSoundBuffer.getInputStrea
 
 public class MusicPlayer {
     private static final Logger LOGGER = LogUtils.getLogger();
-    private final BlockEntity blockEntity;
+    private final MusicBoxBlockEntity blockEntity;
     private SoundInstance soundInstance;
-    private String musicUrl;
     private byte[] musicData;
+    private UUID sessionID;
+    private String musicUrl;
     private STATUS status;
+    private STATUS statusLocal;
 
-    public MusicPlayer(BlockEntity blockEntity) {
+    public MusicPlayer(MusicBoxBlockEntity blockEntity) {
         this.blockEntity = blockEntity;
-        this.status = STATUS.NONE;
+        this.sessionID = UUID.randomUUID();
     }
 
     public static byte[] saveStreamToMusicData(InputStream inputStream) throws IOException {
@@ -51,46 +56,51 @@ public class MusicPlayer {
         return new ByteArrayInputStream(data);
     }
 
-    public String getMusicUrl() {
-        return this.musicUrl;
-    }
-
-    public void setMusicUrl(String musicUrl) {
-        this.musicUrl = musicUrl;
-    }
-
-    public STATUS getStatus() {
-        return status;
-    }
-
     public void play() {
-        this.soundInstance = createDefaultSoundInstance(blockEntity);
-        playSoundFromStream();
-        status = STATUS.PLAYING;
+        if (blockEntity instanceof MusicBoxBlockEntity) {
+            if (blockEntity.getStatus().equals(STATUS.ERROR) || blockEntity.getStatus().equals(STATUS.NONE) || blockEntity.getStatus().equals(STATUS.DOWNLOADING))
+                return;
+
+
+            System.out.println("play music " + blockEntity.getMusicUrl());
+            this.soundInstance = createDefaultSoundInstance(blockEntity);
+            playSoundFromStream();
+
+            blockEntity.setStatusLocal(STATUS.PLAYING);
+        }
     }
 
     public void stopSound() {
+        System.out.println(this.blockEntity.getLevel());
+
         if (this.soundInstance != null) {
+            System.out.println("2");
             SoundManager soundManager = Minecraft.getInstance().getSoundManager();
             soundManager.stop(this.soundInstance);
             this.soundInstance = null;
-            this.status = STATUS.PAUSE;
+
+            blockEntity.setStatusLocal(STATUS.PAUSE);
         }
     }
 
     public void downloadMusic() {
-        LOGGER.info("Downloading music[url={}] for Entity[{}]", this.musicUrl, this.blockEntity.getBlockPos());
-        status = STATUS.DOWNLOADING;
-        stopSound();
-        getInputStreamFromURL(musicUrl).thenAccept(inputStream -> {
+        LOGGER.info("Downloading music[url={}] for Entity[{}]", blockEntity.getMusicUrl(), this.blockEntity.getBlockPos());
+        if (blockEntity.getStatus().equals(STATUS.PLAYING)) {
+            stopSound();
+        }
+
+        blockEntity.setStatusLocal(STATUS.DOWNLOADING);
+
+        getInputStreamFromURL(blockEntity.getMusicUrl()).thenAccept(inputStream -> {
             try {
                 this.musicData = saveStreamToMusicData(inputStream);
-                status = STATUS.STOPPING;
+                blockEntity.setStatusLocal(STATUS.STOPPING);
             } catch (IOException e) {
-                status = STATUS.ERROR;
+                blockEntity.setStatusLocal(STATUS.ERROR);
                 LOGGER.error("Error downloading music", e);
             }
         });
+        CMRS.CHANNEL.sendToServer(new MusicPlayerStatusChangedPacket(blockEntity.getBlockPos(), getStatus()));
     }
 
     private void playSoundFromStream() {
@@ -103,6 +113,54 @@ public class MusicPlayer {
         } else {
             throw new IllegalStateException("SoundEngine is not properly mixed in.");
         }
+    }
+
+    public String getMusicUrl() {
+        return this.musicUrl;
+    }
+
+    // DO NOT USE THIS IN MUSIC BOX BLOCK ENTITY
+    @Deprecated
+    public void setMusicUrl(String musicUrl) {
+        this.musicUrl = musicUrl;
+    }
+
+    public byte[] getMusicData() {
+        return musicData;
+    }
+
+    public void setMusicData(byte[] musicData) {
+        this.musicData = musicData;
+    }
+
+    public STATUS getStatus() {
+        return this.status;
+    }
+
+    // DO NOT USE THIS IN MUSIC BOX BLOCK ENTITY
+    @Deprecated
+    public void setStatus(STATUS status) {
+        this.status = status;
+    }
+
+    public STATUS getStatusLocal() {
+        return statusLocal;
+    }
+
+    public void setStatusLocal(STATUS statusLocal) {
+        this.statusLocal = statusLocal;
+    }
+
+    public UUID getSessionID() {
+        return sessionID;
+    }
+
+    public void setSessionID(UUID sessionID) {
+        this.sessionID = sessionID;
+    }
+
+    public void clean() {
+        this.musicData = null;
     }
 
     private SimpleSoundInstance createDefaultSoundInstance(BlockEntity blockEntity) {
@@ -132,6 +190,7 @@ public class MusicPlayer {
 
     public enum STATUS {
         NONE,
+        URL,
         DOWNLOADING,
         STOPPING,
         PLAYING,
@@ -142,6 +201,7 @@ public class MusicPlayer {
         public String toString() {
             return switch (this) {
                 case NONE -> "No music in this MusicBox";
+                case URL -> "Has music";
                 case DOWNLOADING -> "Downloading";
                 case STOPPING -> "Stopping Playing";
                 case PLAYING -> "Playing";

@@ -21,14 +21,11 @@ import org.lycorecocafe.cmrs.init.MenuInit;
 import org.lycorecocafe.cmrs.network.*;
 import org.slf4j.Logger;
 
-import static org.apache.http.params.CoreProtocolPNames.PROTOCOL_VERSION;
-
 @Mod(CMRS.MODID)
 public class CMRS
 {
-    // Define mod id in a common place for everything to reference
     public static final String MODID = "cmrs";
-    // Directly reference a slf4j logger
+    public static final String PROTOCOL_VERSION = "1";
     private static final Logger LOGGER = LogUtils.getLogger();
     public static final SimpleChannel CHANNEL = NetworkRegistry.newSimpleChannel(
             new ResourceLocation(MODID, "main"),
@@ -44,18 +41,22 @@ public class CMRS
         BlockEntitiesInit.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
-
         MenuInit.MENUS.register(FMLJavaModLoadingContext.get().getModEventBus());
         MinecraftForge.EVENT_BUS.register(this);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event)
     {
-        CHANNEL.registerMessage(0, SignalEmitterPacket.class, SignalEmitterPacket::toBytes, SignalEmitterPacket::new, SignalEmitterPacket::handle);
-        CHANNEL.registerMessage(1, SignalReceiverPacket.class, SignalReceiverPacket::toBytes, SignalReceiverPacket::new, SignalReceiverPacket::handle);
-        CHANNEL.registerMessage(2, ApplySignalPaket.class, ApplySignalPaket::toBytes, ApplySignalPaket::new, ApplySignalPaket::handle);
-        CHANNEL.registerMessage(3, ClearSignalPaket.class, ClearSignalPaket::toBytes, ClearSignalPaket::new, ClearSignalPaket::handle);
-        CHANNEL.registerMessage(4, PlaySoundTestPacket.class, PlaySoundTestPacket::toBytes, PlaySoundTestPacket::new, PlaySoundTestPacket::handle);
+        int index = 0;
+        CHANNEL.registerMessage(index++, SignalEmitterPacket.class, SignalEmitterPacket::toBytes, SignalEmitterPacket::new, SignalEmitterPacket::handle);
+        CHANNEL.registerMessage(index++, SignalReceiverPacket.class, SignalReceiverPacket::toBytes, SignalReceiverPacket::new, SignalReceiverPacket::handle);
+        CHANNEL.registerMessage(index++, ApplySignalPaket.class, ApplySignalPaket::toBytes, ApplySignalPaket::new, ApplySignalPaket::handle);
+        CHANNEL.registerMessage(index++, ClearSignalPaket.class, ClearSignalPaket::toBytes, ClearSignalPaket::new, ClearSignalPaket::handle);
+        CHANNEL.registerMessage(index++, MusicPlayerPacket.class, MusicPlayerPacket::toBytes, MusicPlayerPacket::new, MusicPlayerPacket::handle);
+        CHANNEL.registerMessage(index++, MusicPlayerPlayPacket.class, MusicPlayerPlayPacket::toBytes, MusicPlayerPlayPacket::new, MusicPlayerPlayPacket::handle);
+        CHANNEL.registerMessage(index++, MusicPlayerDownloadMusicNotify.class, MusicPlayerDownloadMusicNotify::toBytes, MusicPlayerDownloadMusicNotify::new, MusicPlayerDownloadMusicNotify::handle);
+        CHANNEL.registerMessage(index++, MusicPlayerStatusChangedPacket.class, MusicPlayerStatusChangedPacket::toBytes, MusicPlayerStatusChangedPacket::new, MusicPlayerStatusChangedPacket::handle);
+        CHANNEL.registerMessage(index++, MusicPlayerPlayNotify.class, MusicPlayerPlayNotify::toBytes, MusicPlayerPlayNotify::new, MusicPlayerPlayNotify::handle);
 
         // Some common setup code
         LOGGER.info("HELLO FROM COMMON SETUP");
