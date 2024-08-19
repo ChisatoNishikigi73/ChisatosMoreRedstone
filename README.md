@@ -1,8 +1,20 @@
 ### Chisato's More Redstone
 
-This module introduces more interesting redstone devices from the original redstone system, such as remote redstone control systems, AND gates, OR gates, XOR gates, and other logic gates. We plan to add more interesting redstone systems in the future, such as password gates, screening systems, etc. This module is still in the testing phase
+This mod introduces more interesting redstone devices, some of which originate from the original redstone system, while
+others are more imaginative. For example, the musicbox, remote redstone control systems, AND gates, OR gates, XOR gates,
+and other logic gates. You can even use the musicbox to listen to songs from the internet with your friends in the game!
+We plan to add more interesting redstone systems in the future, such as password gates, screening systems, etc. This
+module is still in the testing phase.
+
+- Music Box
+
+You can use the musicbox to play songs from the internet in the game!
+
+![MusicBoxUi](https://cdn.modrinth.com/data/cached_images/b24cd325cba59eba56dfe6a727d4f5c7f5867193.png)
 
 - Wireless Redstone
+
+You can remotely control redstone devices that share the same frequency.
 
 ![Signal Emitter and Signal Receiver](https://cdn.modrinth.com/data/cached_images/2ef3ee6b532e68f654f1a984e49015b43aaf0264.png)
 
