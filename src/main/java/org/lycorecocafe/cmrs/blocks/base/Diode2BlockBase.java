@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.blocks;
+package org.lycorecocafe.cmrs.blocks.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -25,11 +25,15 @@ import net.minecraft.world.ticks.TickPriority;
 import org.jetbrains.annotations.NotNull;
 
 public abstract class Diode2BlockBase extends DiodeBlock {
-    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
+    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     protected Diode2BlockBase(BlockBehaviour.Properties behaviorProperties) {
         super(behaviorProperties);
+    }
+
+    public static boolean isDiode(BlockState state) {
+        return state.getBlock() instanceof Diode2BlockBase;
     }
 
     public VoxelShape getShape(@NotNull BlockState state, BlockGetter blockGetter, BlockPos pos, CollisionContext collisionContext) {
@@ -76,7 +80,7 @@ public abstract class Diode2BlockBase extends DiodeBlock {
             dropResources(state, level, pos, blockentity);
             level.removeBlock(pos, false);
 
-            for(Direction direction : Direction.values()) {
+            for (Direction direction : Direction.values()) {
                 level.updateNeighborsAt(pos.relative(direction), this);
             }
 
@@ -181,10 +185,6 @@ public abstract class Diode2BlockBase extends DiodeBlock {
 
     protected int getOutputSignal(BlockGetter blockGetter, BlockPos pos, BlockState state) {
         return 15;
-    }
-
-    public static boolean isDiode(BlockState state) {
-        return state.getBlock() instanceof Diode2BlockBase;
     }
 
     public boolean shouldPrioritize(BlockGetter blockGetter, BlockPos pos, BlockState state) {

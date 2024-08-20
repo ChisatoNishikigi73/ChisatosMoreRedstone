@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.utils.music;
+package org.lycorecocafe.cmrs.utils.game.music;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.Minecraft;
@@ -24,8 +24,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.UUID;
-
-import static org.lycorecocafe.cmrs.utils.music.NetworkSoundBuffer.getInputStreamFromURL;
 
 public class MusicPlayer {
     private static final Logger LOGGER = LogUtils.getLogger();
@@ -61,8 +59,6 @@ public class MusicPlayer {
             if (blockEntity.getStatus().equals(STATUS.ERROR) || blockEntity.getStatus().equals(STATUS.NONE) || blockEntity.getStatus().equals(STATUS.DOWNLOADING))
                 return;
 
-
-            System.out.println("play music " + blockEntity.getMusicUrl());
             this.soundInstance = createDefaultSoundInstance(blockEntity);
             playSoundFromStream();
 
@@ -71,10 +67,7 @@ public class MusicPlayer {
     }
 
     public void stopSound() {
-        System.out.println(this.blockEntity.getLevel());
-
         if (this.soundInstance != null) {
-            System.out.println("2");
             SoundManager soundManager = Minecraft.getInstance().getSoundManager();
             soundManager.stop(this.soundInstance);
             this.soundInstance = null;
@@ -91,7 +84,7 @@ public class MusicPlayer {
 
         blockEntity.setStatusLocal(STATUS.DOWNLOADING);
 
-        getInputStreamFromURL(blockEntity.getMusicUrl()).thenAccept(inputStream -> {
+        NetworkSoundBuffer.getInputStreamFromURL(blockEntity.getMusicUrl()).thenAccept(inputStream -> {
             try {
                 this.musicData = saveStreamToMusicData(inputStream);
                 blockEntity.setStatusLocal(STATUS.STOPPING);

@@ -16,13 +16,14 @@ import org.lycorecocafe.cmrs.handler.SignalHandler;
 import org.lycorecocafe.cmrs.network.ApplySignalPaket;
 import org.lycorecocafe.cmrs.network.ClearSignalPaket;
 import org.lycorecocafe.cmrs.network.SignalEmitterPacket;
-import org.lycorecocafe.cmrs.utils.result.PositionsComparisonResult;
+import org.lycorecocafe.cmrs.utils.game.result.PositionsComparisonResult;
 
 import java.util.List;
 
 public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/signal_emitter.png");
-
+    double minHz = 85.5;
+    double maxHz = 135.5;
     private EditBox inputBox;
     private Button sendButton;
     private EditBox rangeInputBox;
@@ -30,10 +31,7 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
     private Button decreaseButton;
     private RadioSlider radioSlider;
     private boolean isUpdating = false;
-
     private int range = 128;
-    double minHz = 85.5;
-    double maxHz = 135.5;
 
     public SignalEmitterScreen(SignalEmitterMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
@@ -68,14 +66,8 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         this.sendButton = new Button(centerX - 50, centerY + 25, 100, 20, Component.literal("Find Receiver"), button -> {
             List<BlockPos> positions = SignalHandler.findReceiversInRange(this.menu.getBlockEntity(), range);
 
-
-//               if (!Objects.equals(positions, menu.getBlockEntity().getMatchReceivers())) {
-//                CMRS.CHANNEL.sendToServer(new ClearSignalPaket(menu.getBlockEntity().getBlockPos(), menu.getBlockEntity().getMatchReceivers()));
-////                SignalHandler.applySignal(menu.getBlockEntity(), menu.getBlockEntity().getMatchReceivers(), false);
-//            }
-//            CMRS.CHANNEL.sendToServer(new ApplySignalPaket(menu.getBlockEntity().getBlockPos(), positions, menu.getBlockEntity().isPowered()));
             PositionsComparisonResult result = new PositionsComparisonResult().compare(positions, menu.getBlockEntity().getMatchReceivers());
-            if(!result.getRemoved().isEmpty()) {
+            if (!result.getRemoved().isEmpty()) {
                 CMRS.CHANNEL.sendToServer(new ClearSignalPaket(menu.getBlockEntity().getBlockPos(), result.getRemoved()));
             }
 
@@ -86,7 +78,7 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
 
         });
 
-        this.rangeInputBox = new EditBox(this.font, centerX + 52, centerY +25, 28, 20, Component.literal("128"));
+        this.rangeInputBox = new EditBox(this.font, centerX + 52, centerY + 25, 28, 20, Component.literal("128"));
         this.rangeInputBox.setFilter(this::isValidHzInput);
         this.rangeInputBox.setResponder(this::setRange);
         this.addRenderableWidget(this.rangeInputBox);
@@ -94,7 +86,8 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         this.addRenderableWidget(this.sendButton);
 
         Component titleText = Component.literal("Emitter FM");
-        this.addRenderableWidget(new Button(centerX - 50, centerY - 60, 100, 20, titleText, button -> {})).active = false;
+        this.addRenderableWidget(new Button(centerX - 50, centerY - 60, 100, 20, titleText, button -> {
+        })).active = false;
 
         ////TODO: BlaBlaBlaBlaBla I have no idea what im doing
         radioSlider.setHz(getFrequency());
@@ -110,7 +103,7 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         try {
             this.range = Integer.parseInt(input);
 
-        }catch(NumberFormatException e) {
+        } catch (NumberFormatException e) {
             this.range = 128;
         }
     }
@@ -120,11 +113,6 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
             try {
                 isUpdating = true;
                 double hz = Double.parseDouble(input);
-//                if (!Objects.equals(hz, radioSlider.getHz())) {
-//                    SignalHandler.clearSignal(menu.getBlockEntity(), menu.getBlockEntity().getMatchReceivers());
-//                    menu.getBlockEntity().setMatchReceivers(new ArrayList<>());
-//                    CMRS.CHANNEL.sendToServer(new SignalEmitterPacket(menu.getBlockEntity().getBlockPos(), hz, menu.getBlockEntity().getMatchReceivers()));
-//                }
                 radioSlider.setHz(hz);
                 setFrequency(hz);
                 CMRS.CHANNEL.sendToServer(new SignalEmitterPacket(menu.getBlockEntity().getBlockPos(), hz, menu.getBlockEntity().getMatchReceivers()));
@@ -140,11 +128,6 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         if (!isUpdating) {
             try {
                 isUpdating = true;
-//                if (!Objects.equals(hz, radioSlider.getHz())) {
-//                    SignalHandler.clearSignal(menu.getBlockEntity(), menu.getBlockEntity().getMatchReceivers());
-//                    menu.getBlockEntity().setMatchReceivers(new ArrayList<>());
-//                    CMRS.CHANNEL.sendToServer(new SignalEmitterPacket(menu.getBlockEntity().getBlockPos(), hz, menu.getBlockEntity().getMatchReceivers()));
-//                }
                 setFrequency(hz);
                 CMRS.CHANNEL.sendToServer(new SignalEmitterPacket(menu.getBlockEntity().getBlockPos(), hz, menu.getBlockEntity().getMatchReceivers()));
             } finally {
@@ -166,13 +149,13 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         this.blit(matrixStack, relX, relY, 0, 0, this.imageWidth, this.imageHeight);
     }
 
+    private double getFrequency() {
+        return this.menu.getBlockEntity().getFrequency();
+    }
+
     private void setFrequency(double hz) {
         this.menu.getBlockEntity().setFrequency(hz);
         this.inputBox.setValue(String.format("%.1f", hz));
-    }
-
-    private double getFrequency() {
-        return this.menu.getBlockEntity().getFrequency();
     }
 
     @Override
@@ -180,17 +163,17 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
-        this.inputBox.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.sendButton.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.rangeInputBox.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.increaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.decreaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.radioSlider.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.inputBox.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.sendButton.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.rangeInputBox.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.increaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.decreaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.radioSlider.render(matrixStack, mouseX, mouseY, partialTicks);
 //        drawString(matrixStack, this.font, "已匹配" + menu.getBlockEntity().getMatchReceivers().size() + "个接收器", this.width / 2 - 50, this.height / 2 + 13, 4210752);
         drawString(matrixStack, this.font, "Matched " + menu.getBlockEntity().getMatchReceivers().size() + " Receiver", this.width / 2 - 50, this.height / 2 + 13, 42107521);
     }
 
     protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) {
-        this.font.draw(p_97808_, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
+        this.font.draw(p_97808_, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
 }

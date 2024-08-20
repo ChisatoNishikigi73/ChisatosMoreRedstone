@@ -37,8 +37,7 @@ public class SignalReceiverPacket {
             ServerPlayer player = ctx.get().getSender();
             if (player != null) {
                 BlockEntity blockEntity = player.level.getBlockEntity(receiverPos);
-                if (blockEntity instanceof SignalReceiverBlockEntity) {
-                    SignalReceiverBlockEntity receiverBlockEntity = (SignalReceiverBlockEntity) blockEntity;
+                if (blockEntity instanceof SignalReceiverBlockEntity receiverBlockEntity) {
                     receiverBlockEntity.setFrequency(frequency);
                     receiverBlockEntity.setEmitterPos(emitterPos);
                     receiverBlockEntity.setChanged();

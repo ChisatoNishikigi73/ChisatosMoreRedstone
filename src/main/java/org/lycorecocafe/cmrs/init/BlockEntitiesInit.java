@@ -11,6 +11,10 @@ import org.lycorecocafe.cmrs.blockentity.*;
 public class BlockEntitiesInit {
     public static final DeferredRegister<BlockEntityType<?>> BLOCK_ENTITIES = DeferredRegister.create(ForgeRegistries.BLOCK_ENTITY_TYPES, CMRS.MODID);
 
+    public static void register(IEventBus eventBus) {
+        BLOCK_ENTITIES.register(eventBus);
+    }
+
     public static final RegistryObject<BlockEntityType<ANDGateBlockEntity>> AND_GATE = BLOCK_ENTITIES.register("and_gate", () -> BlockEntityType.Builder.of(ANDGateBlockEntity::new, BlocksInit.AND_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<ORGateBlockEntity>> OR_GATE = BLOCK_ENTITIES.register("or_gate", () -> BlockEntityType.Builder.of(ORGateBlockEntity::new, BlocksInit.OR_GATE.get()).build(null));
     public static final RegistryObject<BlockEntityType<NOTGateBlockEntity>> NOT_GATE = BLOCK_ENTITIES.register("not_gate", () -> BlockEntityType.Builder.of(NOTGateBlockEntity::new, BlocksInit.NOT_GATE.get()).build(null));
@@ -23,7 +27,5 @@ public class BlockEntitiesInit {
     public static final RegistryObject<BlockEntityType<SignalReceiverBlockEntity>> SIGNAL_RECEIVER_BE = BLOCK_ENTITIES.register("signal_receiver_be", () -> BlockEntityType.Builder.of(SignalReceiverBlockEntity::new, BlocksInit.SIGNAL_RECEIVER.get()).build(null));
     public static final RegistryObject<BlockEntityType<MusicBoxBlockEntity>> MUSIC_BOX_BE = BLOCK_ENTITIES.register("music_box_be", () -> BlockEntityType.Builder.of(MusicBoxBlockEntity::new, BlocksInit.CROSS_GATE.get()).build(null));
 
-    public static void register(IEventBus eventBus) {
-        BLOCK_ENTITIES.register(eventBus);
-    }
+
 }

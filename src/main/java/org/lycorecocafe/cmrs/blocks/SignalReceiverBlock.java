@@ -28,16 +28,16 @@ public class SignalReceiverBlock extends HorizontalDirectionalBlock implements E
     public static final BooleanProperty POWERED = BooleanProperty.create("powered");
     protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
 
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
-
     public SignalReceiverBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(POWERED, false)
                 .setValue(FACING, Direction.NORTH)
         );
+    }
+
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override

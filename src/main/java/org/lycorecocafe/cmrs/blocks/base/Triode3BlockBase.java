@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.blocks;
+package org.lycorecocafe.cmrs.blocks.base;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
@@ -17,7 +17,7 @@ import net.minecraft.world.level.block.RedStoneWireBlock;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
-import net.minecraft.world.level.block.state.properties.IntegerProperty;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -26,21 +26,20 @@ import org.jetbrains.annotations.NotNull;
 import java.util.Collections;
 import java.util.List;
 
-public abstract class Tetrode4BlockBase extends HorizontalDirectionalBlock {
+public abstract class Triode3BlockBase extends HorizontalDirectionalBlock {
     protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
-    public abstract IntegerProperty getStateProperty();
-    public abstract boolean getLeftInput();
-    public abstract boolean getRightInput();
-    public abstract boolean getFormerInput();
-    public abstract boolean getAfterInput();
 
-    //public abstract boolean output1Computation(boolean input);
-    //public abstract boolean output2Computation(boolean input1, boolean input2);
-    //public abstract boolean output3Computation(boolean Input1, boolean input2, boolean input3);
-
-    public Tetrode4BlockBase(Properties properties) {
+    public Triode3BlockBase(Properties properties) {
         super(properties);
     }
+
+    public abstract BooleanProperty getLeftInputProperty();
+
+    public abstract BooleanProperty getRightInputProperty();
+
+    public abstract BooleanProperty getPoweredProperty();
+
+    public abstract boolean outputComputation(boolean leftInput, boolean rightInput);
 
     public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
         return SHAPE;
@@ -53,7 +52,7 @@ public abstract class Tetrode4BlockBase extends HorizontalDirectionalBlock {
 
     @Override
     protected void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> builder) {
-        builder.add(getStateProperty(), FACING);
+        builder.add(getLeftInputProperty(), getRightInputProperty(), FACING, getPoweredProperty());
     }
 
     @Override
@@ -103,9 +102,6 @@ public abstract class Tetrode4BlockBase extends HorizontalDirectionalBlock {
 //        }
 //    }
 
-//    public void tick(BlockState p_221065_, ServerLevel p_221066_, BlockPos p_221067_, RandomSource p_221068_) {
-//        
-//    }
 
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
@@ -116,14 +112,25 @@ public abstract class Tetrode4BlockBase extends HorizontalDirectionalBlock {
             dropResources(state, world, pos, blockentity);
             world.removeBlock(pos, false);
 
-            for(Direction direction : Direction.values()) {
+            for (Direction direction : Direction.values()) {
                 world.updateNeighborsAt(pos.relative(direction), this);
             }
 
         }
     }
 
-    protected abstract void checkTickOnNeighbor(Level world, BlockPos pos, BlockState state);
+    protected void checkTickOnNeighbor(Level world, BlockPos pos, BlockState state) {
+        boolean leftInput = getInputSignalFromDirectionBool(world, pos, state.getValue(FACING).getClockWise());
+        boolean rightInput = getInputSignalFromDirectionBool(world, pos, state.getValue(FACING).getCounterClockWise());
+        boolean output = outputComputation(leftInput, rightInput);
+        BlockState newState = state.setValue(getLeftInputProperty(), leftInput).setValue(getRightInputProperty(), rightInput).setValue(getPoweredProperty(), output);
+        if (newState != state) {
+            world.setBlock(pos, newState, 3);
+            Direction facing = state.getValue(FACING);
+            BlockPos outputPos = pos.relative(facing);
+            world.updateNeighborsAt(outputPos, this);
+        }
+    }
 
     @Override
     public boolean isSignalSource(BlockState state) {
@@ -131,8 +138,16 @@ public abstract class Tetrode4BlockBase extends HorizontalDirectionalBlock {
     }
 
     @Override
-    public abstract int getAnalogOutputSignal(BlockState state, @NotNull Level world, @NotNull BlockPos pos);
+    public int getAnalogOutputSignal(BlockState state, @NotNull Level world, @NotNull BlockPos pos) {
+        return (outputComputation(state.getValue(getLeftInputProperty()), state.getValue(getLeftInputProperty())) ? 15 : 0);
+    }
 
     @Override
-    public abstract int getSignal(BlockState state, @NotNull BlockGetter p_52521_, @NotNull BlockPos pos, @NotNull Direction direction);
+    public int getSignal(BlockState state, @NotNull BlockGetter p_52521_, @NotNull BlockPos pos, @NotNull Direction direction) {
+        if (!state.getValue(getPoweredProperty())) {
+            return 0;
+        } else {
+            return state.getValue(FACING) == direction ? 15 : 0;
+        }
+    }
 }

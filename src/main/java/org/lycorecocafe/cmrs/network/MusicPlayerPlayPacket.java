@@ -8,7 +8,7 @@ import net.minecraftforge.network.NetworkEvent;
 import net.minecraftforge.network.PacketDistributor;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
-import org.lycorecocafe.cmrs.utils.music.MusicPlayer.STATUS;
+import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer.STATUS;
 
 import java.util.function.Supplier;
 

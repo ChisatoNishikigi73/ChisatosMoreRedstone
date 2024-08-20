@@ -29,7 +29,6 @@ public class NOTGateBlockEntity extends BlockEntity {
         world.updateNeighborsAt(pos, this.getBlockState().getBlock());
 
 
-
     }
 
     private boolean hasSignalFromSide(Level world, BlockPos pos, Direction direction) {

@@ -19,11 +19,11 @@ import org.jetbrains.annotations.Nullable;
 import org.lycorecocafe.cmrs.blockentity.CrossGateBlockEntity;
 
 public class CrossGateBlock extends Block implements EntityBlock {
-    protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     public static final BooleanProperty NORTH_POWERED = BooleanProperty.create("north_powered");
     public static final BooleanProperty SOUTH_POWERED = BooleanProperty.create("south_powered");
     public static final BooleanProperty WEST_POWERED = BooleanProperty.create("west_powered");
     public static final BooleanProperty EAST_POWERED = BooleanProperty.create("east_powered");
+    protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     public CrossGateBlock(BlockBehaviour.Properties properties) {
         super(properties);

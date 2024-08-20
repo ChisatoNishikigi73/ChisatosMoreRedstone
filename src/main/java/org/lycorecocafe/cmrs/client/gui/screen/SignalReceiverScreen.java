@@ -19,21 +19,17 @@ import java.util.Objects;
 //TODO: Single upstream mode and multiple upstream modes
 public class SignalReceiverScreen extends AbstractContainerScreen<SignalReceiverMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/signal_receiver.png");
+    //TODO: Put it in static plz
+    double minHz = 85.5;
+    double maxHz = 135.5;
     private EditBox inputBox;
     private Button increaseButton;
     private Button decreaseButton;
     private RadioSlider radioSlider;
-//    private BlockPos blockPos;
-
     private boolean isUpdating = false;
-
-    //TODO: Put it in static plz
-    double minHz = 85.5;
-    double maxHz = 135.5;
 
     public SignalReceiverScreen(SignalReceiverMenu menu, Inventory inv, Component title) {
         super(menu, inv, title);
-//        this.blockPos =  menu.getBlockEntity().getBlockPos();
     }
 
     @Override
@@ -63,14 +59,14 @@ public class SignalReceiverScreen extends AbstractContainerScreen<SignalReceiver
         this.addRenderableWidget(this.radioSlider);
 
         Component titleText = Component.literal("Receiver FM");
-        this.addRenderableWidget(new Button(centerX - 50, centerY - 60, 100, 20, titleText, button -> {})).active = false;
+        this.addRenderableWidget(new Button(centerX - 50, centerY - 60, 100, 20, titleText, button -> {
+        })).active = false;
 
-        if(menu.getBlockEntity().getEmitterPos() == null) {
+        if (menu.getBlockEntity().getEmitterPos() == null) {
             menu.getBlockEntity().setEmitterPos(menu.getBlockEntity().getBlockPos());
         }
         radioSlider.setHz(menu.getBlockEntity().getFrequency());
         updateInputFromSlider(radioSlider.getHz());
-//        System.out.println(menu.getBlockEntity());
     }
 
     private boolean isValidHzInput(String input) {
@@ -133,14 +129,14 @@ public class SignalReceiverScreen extends AbstractContainerScreen<SignalReceiver
         this.renderBackground(matrixStack);
         super.render(matrixStack, mouseX, mouseY, partialTicks);
         this.renderTooltip(matrixStack, mouseX, mouseY);
-        this.inputBox.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.increaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.decreaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
-        this.radioSlider.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.inputBox.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.increaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.decreaseButton.render(matrixStack, mouseX, mouseY, partialTicks);
+//        this.radioSlider.render(matrixStack, mouseX, mouseY, partialTicks);
         if (menu.getBlockEntity().getEmitterPos() != null && !Objects.equals(menu.getBlockEntity().getEmitterPos(), menu.getBlockEntity().getBlockPos())) {
             drawCenteredString(matrixStack, this.font, "Upstream Emitter:", this.width / 2, this.height / 2 + 13, 4210752);
             drawCenteredString(matrixStack, this.font, menu.getBlockEntity().getEmitterPos().toShortString(), this.width / 2, this.height / 2 + 23, 4210752);
-        }else {
+        } else {
             drawCenteredString(matrixStack, this.font, "Upstream Emitter:", this.width / 2, this.height / 2 + 13, 4210752);
             drawCenteredString(matrixStack, this.font, "N/A", this.width / 2, this.height / 2 + 23, 4210752);
 
@@ -148,6 +144,6 @@ public class SignalReceiverScreen extends AbstractContainerScreen<SignalReceiver
     }
 
     protected void renderLabels(PoseStack p_97808_, int p_97809_, int p_97810_) {
-        this.font.draw(p_97808_, this.title, (float)this.titleLabelX, (float)this.titleLabelY, 4210752);
+        this.font.draw(p_97808_, this.title, (float) this.titleLabelX, (float) this.titleLabelY, 4210752);
     }
 }

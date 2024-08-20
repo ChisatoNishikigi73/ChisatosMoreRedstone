@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.utils.result;
+package org.lycorecocafe.cmrs.utils.game.result;
 
 import net.minecraft.core.BlockPos;
 
@@ -11,8 +11,7 @@ import java.util.stream.Collectors;
 public class PositionsComparisonResult {
     private List<BlockPos> added;
     private List<BlockPos> removed;
-//    private List<BlockPos> changed_add = new ArrayList<>();
-//    private List<BlockPos> changed_remov = new ArrayList<>();
+
     @Deprecated
     public PositionsComparisonResult(List<BlockPos> added, List<BlockPos> removed) {
         this.added = added;
@@ -47,7 +46,5 @@ public class PositionsComparisonResult {
         this.added = added.stream().toList();
         this.removed = removed.stream().toList();
         return this;
-//        System.out.println("Added: " + added);
-//        System.out.println("Removed: " + removed);
     }
 }

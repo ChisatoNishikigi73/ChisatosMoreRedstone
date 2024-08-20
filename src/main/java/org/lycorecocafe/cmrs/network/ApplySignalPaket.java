@@ -45,8 +45,7 @@ public class ApplySignalPaket {
             if (player != null) {
                 Level world = player.level;
                 BlockEntity blockEntity = world.getBlockEntity(emitterPos);
-                if (blockEntity instanceof SignalEmitterBlockEntity) {
-                    SignalEmitterBlockEntity emitter = (SignalEmitterBlockEntity) blockEntity;
+                if (blockEntity instanceof SignalEmitterBlockEntity emitter) {
                     SignalHandler.applySignal(emitter, receiverPos);
                 }
             }

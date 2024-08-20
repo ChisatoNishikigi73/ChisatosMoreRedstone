@@ -10,10 +10,6 @@ public class RadioSlider extends AbstractSliderButton {
     private final Component prefix;
     private final ValueChangeListener valueChangeListener;
 
-    public interface ValueChangeListener {
-        void onValueChange(double value);
-    }
-
     public RadioSlider(int x, int y, int width, int height, double minValue, double maxValue, Component prefix, ValueChangeListener valueChangeListener) {
         super(x, y, width, height, Component.empty(), 0.0D);
         this.minValue = minValue;
@@ -53,13 +49,17 @@ public class RadioSlider extends AbstractSliderButton {
         }
     }
 
+    public double getHz() {
+        return Mth.lerp(this.value, this.minValue, this.maxValue);
+    }
+
     public void setHz(double hz) {
         this.value = Mth.clamp((hz - this.minValue) / (this.maxValue - this.minValue), 0.0, 1.0);
         this.updateMessage();
         this.applyValue();
     }
 
-    public double getHz() {
-        return Mth.lerp(this.value, this.minValue, this.maxValue);
+    public interface ValueChangeListener {
+        void onValueChange(double value);
     }
 }

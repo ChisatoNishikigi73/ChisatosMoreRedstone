@@ -25,15 +25,15 @@ import org.lycorecocafe.cmrs.blockentity.SignalEmitterBlockEntity;
 public class SignalEmitterBlock extends HorizontalDirectionalBlock implements EntityBlock {
     protected final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 4.0D, 16.0D);
 
-    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
-        return SHAPE;
-    }
-
     public SignalEmitterBlock(Properties properties) {
         super(properties);
         this.registerDefaultState(this.stateDefinition.any()
                 .setValue(FACING, Direction.NORTH)
         );
+    }
+
+    public VoxelShape getShape(BlockState state, BlockGetter world, BlockPos pos, CollisionContext context) {
+        return SHAPE;
     }
 
     @Override
@@ -66,9 +66,7 @@ public class SignalEmitterBlock extends HorizontalDirectionalBlock implements En
 
     @Override
     public void neighborChanged(BlockState state, Level world, BlockPos pos, Block block, BlockPos fromPos, boolean isMoving) {
-//        System.out.println("neighborChanged");
         if (!world.isClientSide) {
-//            System.out.println(world);
             boolean isPowered = world.hasNeighborSignal(pos);
             BlockEntity blockEntity = world.getBlockEntity(pos);
             if (blockEntity instanceof SignalEmitterBlockEntity) {

@@ -14,30 +14,6 @@ import java.util.List;
 
 public class SignalHandler {
 
-//    public static void findAndPrintReceivers(SignalEmitterBlockEntity emitter, int range) {
-//        Level world = emitter.getLevel();
-//        if (world == null) return;
-//
-//        BlockPos emitterPos = emitter.getBlockPos();
-//        double emitterFrequency = emitter.getFrequency();
-//
-//        for (int x = -range; x <= range; x++) {
-//            for (int y = -range; y <= range; y++) {
-//                for (int z = -range; z <= range; z++) {
-//                    BlockPos currentPos = emitterPos.offset(x, y, z);
-//                    BlockEntity blockEntity = world.getBlockEntity(currentPos);
-//
-//                    if (blockEntity instanceof SignalReceiverBlockEntity) {
-//                        SignalReceiverBlockEntity receiver = (SignalReceiverBlockEntity) blockEntity;
-//                        if (receiver.getFrequency() == emitterFrequency) {
-//                            System.out.println("Matching receiver found at: " + currentPos);
-//                        }
-//                    }
-//                }
-//            }
-//        }
-//    }
-
     public static List<BlockPos> findReceiversInRange(SignalEmitterBlockEntity emitter, int range) {
         Level world = emitter.getLevel();
         if (world == null) return null;
@@ -52,8 +28,7 @@ public class SignalHandler {
                     BlockPos currentPos = emitterPos.offset(x, y, z);
                     BlockEntity blockEntity = world.getBlockEntity(currentPos);
 
-                    if (blockEntity instanceof SignalReceiverBlockEntity) {
-                        SignalReceiverBlockEntity receiver = (SignalReceiverBlockEntity) blockEntity;
+                    if (blockEntity instanceof SignalReceiverBlockEntity receiver) {
                         if (receiver.getFrequency() == emitterFrequency) {
                             receivers.add(currentPos);
 //                            .out.println("Matching receiver found at: " + currentPos);
@@ -95,7 +70,6 @@ public class SignalHandler {
                 receiver.setChanged();
                 world.setBlock(pos, receiver.getBlockState().setValue(SignalReceiverBlock.POWERED, receiver.isPowered()), 3);
                 world.sendBlockUpdated(pos, receiver.getBlockState(), receiver.getBlockState(), 3);
-//                CMRS.CHANNEL.sendToServer(new SignalReceiverPacket(pos, receiver.getFrequency(), emitter.getBlockPos()));
             }
         }
     }

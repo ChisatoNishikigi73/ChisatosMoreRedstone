@@ -40,12 +40,10 @@ public class SignalEmitterBlockEntity extends BlockEntity implements MenuProvide
         setChanged();
     }
 
+    // Handle changes in redstone signal to update receiver states
     public void onRedstoneSignalChanged(Level world, boolean isPowered) {
-//        System.out.println(this);
-//        System.out.println(this.getLevel());
         if (this.powered != isPowered) {
             this.powered = isPowered;
-//            System.out.println(getMatchReceivers());
             SignalHandler.setReceiverPowered(world, getMatchReceivers(), isPowered);
             setChanged();
         }
@@ -100,7 +98,6 @@ public class SignalEmitterBlockEntity extends BlockEntity implements MenuProvide
     @Override
     public void load(CompoundTag tag) {
         super.load(tag);
-
         frequency = tag.getDouble("Frequency");
         matchReceivers.clear();
         for (long pos : tag.getLongArray("MatchReceivers")) {

@@ -8,6 +8,7 @@ public class CreativeModeTabInit {
     public static final CreativeModeTab CMRS_TAB = new CreativeModeTab("cmrs_tab") {
         @Override
         public ItemStack makeIcon() {
-            return new ItemStack(Items.REDSTONE); }
+            return new ItemStack(Items.REDSTONE);
+        }
     };
 }

@@ -14,7 +14,7 @@ import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 import org.lycorecocafe.cmrs.client.gui.menu.MusicBoxMenu;
 import org.lycorecocafe.cmrs.network.MusicPlayerPacket;
 import org.lycorecocafe.cmrs.network.MusicPlayerPlayPacket;
-import org.lycorecocafe.cmrs.utils.music.MusicPlayer;
+import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer;
 import org.slf4j.Logger;
 
 public class MusicBoxScreen extends AbstractContainerScreen<MusicBoxMenu> {

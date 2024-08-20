@@ -35,13 +35,17 @@ public class SignalReceiverBlockEntity extends BlockEntity implements MenuProvid
         this.powered = powered;
         if (level != null) {
             level.setBlock(worldPosition, getBlockState().setValue(SignalReceiverBlock.POWERED, powered), 3);
-//            this.level.sendBlockUpdated(this.worldPosition, this.getBlockState(), this.getBlockState(), 3);
         }
         setChanged();
     }
 
     public double getFrequency() {
         return frequency;
+    }
+
+    public void setFrequency(double frequency) {
+        this.frequency = frequency;
+        setChanged();
     }
 
     public BlockPos getEmitterPos() {
@@ -51,11 +55,6 @@ public class SignalReceiverBlockEntity extends BlockEntity implements MenuProvid
     public void setEmitterPos(BlockPos emitterPos) {
         EmitterPos = emitterPos;
 //        System.out.println("set " + emitterPos + " to " + this.getBlockPos() + " " + this + " " + this.level);
-        setChanged();
-    }
-
-    public void setFrequency(double frequency) {
-        this.frequency = frequency;
         setChanged();
     }
 

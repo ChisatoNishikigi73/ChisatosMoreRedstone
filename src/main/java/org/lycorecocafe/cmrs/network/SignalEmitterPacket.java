@@ -43,8 +43,7 @@ public class SignalEmitterPacket {
     public boolean handle(Supplier<NetworkEvent.Context> ctx) {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
-            if (player != null && player.level.getBlockEntity(pos) instanceof SignalEmitterBlockEntity) {
-                SignalEmitterBlockEntity blockEntity = (SignalEmitterBlockEntity) player.level.getBlockEntity(pos);
+            if (player != null && player.level.getBlockEntity(pos) instanceof SignalEmitterBlockEntity blockEntity) {
                 blockEntity.setFrequency(frequency);
                 blockEntity.setMatchReceivers(positions);
                 blockEntity.setChanged();

@@ -1,16 +1,15 @@
 {
- "itemGroup.cmrs_tab": "Chisato的更多红石",
- "block.cmrs.and_gate": "与门",
- "block.cmrs.nand_gate": "与非门",
- "block.cmrs.nor_gate": "或非门",
- "block.cmrs.not_gate": "非门",
- "block.cmrs.or_gate": "或门",
- "block.cmrs.xnor_gate": "同或门",
- "block.cmrs.xor_gate": "异或门",
- "block.cmrs.cross_gate": "红石桥",
- "block.cmrs.signal_emitter": "红石信号发射终端",
- "block.cmrs.signal_receiver": "红石信号接收器",
- "block.cmrs.music_box": "音乐盒",
-
- "item.cmrs.redstone_detector": "红石网络探测器"
+  "itemGroup.cmrs_tab": "Chisato的更多红石",
+  "block.cmrs.and_gate": "与门",
+  "block.cmrs.nand_gate": "与非门",
+  "block.cmrs.nor_gate": "或非门",
+  "block.cmrs.not_gate": "非门",
+  "block.cmrs.or_gate": "或门",
+  "block.cmrs.xnor_gate": "同或门",
+  "block.cmrs.xor_gate": "异或门",
+  "block.cmrs.cross_gate": "红石桥",
+  "block.cmrs.signal_emitter": "红石信号发射终端",
+  "block.cmrs.signal_receiver": "红石信号接收器",
+  "block.cmrs.music_box": "音乐盒",
+  "item.cmrs.redstone_detector": "红石网络探测器"
 }

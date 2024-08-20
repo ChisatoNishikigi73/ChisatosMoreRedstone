@@ -1,11 +1,19 @@
 {
   "variants": {
-    "facing=north": { "model": "cmrs:block/signal_emitter"},
-    
-    "facing=east": { "model": "cmrs:block/signal_emitter", "y": 90 },
-    
-    "facing=south": { "model": "cmrs:block/signal_emitter", "y": 180 },
-    
-    "facing=west": { "model": "cmrs:block/signal_emitter", "y": 270 }
+    "facing=north": {
+      "model": "cmrs:block/signal_emitter"
+    },
+    "facing=east": {
+      "model": "cmrs:block/signal_emitter",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "cmrs:block/signal_emitter",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cmrs:block/signal_emitter",
+      "y": 270
+    }
   }
 }

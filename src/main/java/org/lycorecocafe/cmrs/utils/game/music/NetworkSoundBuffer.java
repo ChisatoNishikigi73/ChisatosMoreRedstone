@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.utils.music;
+package org.lycorecocafe.cmrs.utils.game.music;
 
 import com.mojang.blaze3d.audio.OggAudioStream;
 import com.mojang.blaze3d.audio.SoundBuffer;

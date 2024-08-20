@@ -1,7 +1,5 @@
 {
   "itemGroup.cmrs_tab": "Chisato's More Redstone",
-
-
   "block.cmrs.and_gate": "AND Gate",
   "block.cmrs.nand_gate": "NAND Gate",
   "block.cmrs.nor_gate": "NOR Gate",
@@ -13,6 +11,5 @@
   "block.cmrs.signal_emitter": "Signal Emitter",
   "block.cmrs.signal_receiver": "Signal Receiver",
   "block.cmrs.music_box": "Music Box",
-
   "item.cmrs.redstone_detector": "Redstone Network Detector"
 }

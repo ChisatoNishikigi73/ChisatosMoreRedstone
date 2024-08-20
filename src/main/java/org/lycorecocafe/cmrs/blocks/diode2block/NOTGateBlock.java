@@ -23,18 +23,10 @@ import org.jetbrains.annotations.NotNull;
 import org.lycorecocafe.cmrs.blockentity.NOTGateBlockEntity;
 
 public class NOTGateBlock extends HorizontalDirectionalBlock implements EntityBlock {
-    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
     public static final BooleanProperty INPUT = BooleanProperty.create("input");
     public static final DirectionProperty FACING = BlockStateProperties.HORIZONTAL_FACING;
     public static final BooleanProperty POWERED = BlockStateProperties.POWERED;
-
-    public VoxelShape getShape(BlockState p_52556_, BlockGetter p_52557_, BlockPos p_52558_, CollisionContext p_52559_) {
-        return SHAPE;
-    }
-
-    public boolean canSurvive(BlockState p_52538_, LevelReader p_52539_, BlockPos p_52540_) {
-        return canSupportRigidBlock(p_52539_, p_52540_.below());
-    }
+    protected static final VoxelShape SHAPE = Block.box(0.0D, 0.0D, 0.0D, 16.0D, 2.0D, 16.0D);
 
     public NOTGateBlock(Properties properties) {
         super(properties);
@@ -42,6 +34,14 @@ public class NOTGateBlock extends HorizontalDirectionalBlock implements EntityBl
                 .setValue(INPUT, false)
                 .setValue(FACING, Direction.NORTH)
                 .setValue(POWERED, false));
+    }
+
+    public VoxelShape getShape(BlockState p_52556_, BlockGetter p_52557_, BlockPos p_52558_, CollisionContext p_52559_) {
+        return SHAPE;
+    }
+
+    public boolean canSurvive(BlockState p_52538_, LevelReader p_52539_, BlockPos p_52540_) {
+        return canSupportRigidBlock(p_52539_, p_52540_.below());
     }
 
     @Override
@@ -109,7 +109,6 @@ public class NOTGateBlock extends HorizontalDirectionalBlock implements EntityBl
         level.neighborChanged(blockpos, this, pos);
         level.updateNeighborsAtExceptFromFacing(blockpos, this, direction);
     }
-
 
 
     @Override

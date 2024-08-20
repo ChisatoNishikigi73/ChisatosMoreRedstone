@@ -19,6 +19,7 @@ public class RedstoneDetectorItem extends Item {
 
     private static final int DETECTION_RANGE = 32;
     private static boolean signalMode = true;  // 定义当前模式，默认 true 表示 findRedstoneSignalSource 模式
+
     public RedstoneDetectorItem(Properties properties) {
         super(properties);
     }
@@ -38,7 +39,7 @@ public class RedstoneDetectorItem extends Item {
             }
             StringBuilder messageBuilder = new StringBuilder();
 
-            if (signalSource != null && !signalSource.signalSources.isEmpty()) {
+            if (!signalSource.signalSources.isEmpty()) {
                 messageBuilder.append("Redstone network at ").append(pos).append(" is powered by ").append(signalSource.signalSources.size()).append(" following sources:\n");
                 for (RedstoneWireBlockMixin.SignalSource.BlockData sourceData : signalSource.signalSources) {
                     messageBuilder.append(" - ")

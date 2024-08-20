@@ -1,9 +1,10 @@
 buildscript {
     repositories {
         // These repositories are only for Gradle plugins, put any other repositories in the repository block further below
+        maven { url = ' http://maven.aliyun.com/nexus/content/groups/public/' }
         maven { url = 'https://repo.spongepowered.org/repository/maven-public/' }
-        mavenCentral()
-        jcenter()
+//        mavenCentral()
+//        jcenter()
     }
     dependencies {
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
@@ -48,7 +49,7 @@ minecraft {
             property 'forge.logging.markers', 'REGISTRIES' // 注册事件日志
 
             // 推荐的控制台日志记录级别
-            property 'forge.logging.console.level', 'debug'
+            property 'forge.logging.console.level', 'TRACE'
 
             // 设置加载游戏测试的命名空间
             property 'forge.enabledGameTestNamespaces', mod_id
@@ -62,6 +63,8 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id // 配置客户端运行配置
+            args '--username', 'Player_' + UUID.randomUUID().toString().substring(0, 8)
+            args '--offline'
         }
 
         server {

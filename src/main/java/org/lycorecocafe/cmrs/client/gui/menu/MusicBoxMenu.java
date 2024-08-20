@@ -17,7 +17,7 @@ public class MusicBoxMenu extends AbstractContainerMenu {
     private final ContainerLevelAccess access;
 
     public MusicBoxMenu(int id, Inventory playerInventory, FriendlyByteBuf extraData) {
-        this(id, playerInventory, (MusicBoxBlockEntity) playerInventory.player.level.getBlockEntity(extraData.readBlockPos()));
+        this(id, playerInventory, getBlockEntityFromBuf(extraData, playerInventory.player.level));
     }
 
     public MusicBoxMenu(int id, Inventory playerInventory, MusicBoxBlockEntity blockEntity) {

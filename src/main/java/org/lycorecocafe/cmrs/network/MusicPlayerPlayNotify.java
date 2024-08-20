@@ -6,7 +6,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraftforge.network.NetworkEvent;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
-import org.lycorecocafe.cmrs.utils.music.MusicPlayer;
+import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer;
 
 import java.util.function.Supplier;
 

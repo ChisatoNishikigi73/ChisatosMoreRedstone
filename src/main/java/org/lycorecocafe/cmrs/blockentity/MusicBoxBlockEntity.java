@@ -15,7 +15,7 @@ import net.minecraftforge.common.capabilities.CapabilityDispatcher;
 import org.jetbrains.annotations.Nullable;
 import org.lycorecocafe.cmrs.client.gui.menu.MusicBoxMenu;
 import org.lycorecocafe.cmrs.init.BlockEntitiesInit;
-import org.lycorecocafe.cmrs.utils.music.MusicPlayer;
+import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer;
 
 public class MusicBoxBlockEntity extends BlockEntity implements MenuProvider {
 
@@ -73,7 +73,7 @@ public class MusicBoxBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public void invalidateCaps() {
-        this.getMusicPlayer().stopSound();
+        this.getMusicPlayer().stopSound(); // Stop music when invalidating capabilities
         final CapabilityDispatcher disp = getCapabilities();
         if (disp != null)
             disp.invalidate();

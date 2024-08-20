@@ -5,7 +5,7 @@ import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraftforge.network.NetworkEvent;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
-import org.lycorecocafe.cmrs.utils.music.MusicPlayer.STATUS;
+import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer.STATUS;
 
 import java.util.function.Supplier;
 
@@ -32,7 +32,6 @@ public class MusicPlayerStatusChangedPacket {
         ctx.get().enqueueWork(() -> {
             ServerPlayer player = ctx.get().getSender();
             if (player != null && player.level.getBlockEntity(pos) instanceof MusicBoxBlockEntity blockEntity) {
-                System.out.println("status: " + blockEntity.getStatus());
                 blockEntity.setStatus(status);
                 blockEntity.setChanged();
                 player.level.sendBlockUpdated(pos, blockEntity.getBlockState(), blockEntity.getBlockState(), 3);

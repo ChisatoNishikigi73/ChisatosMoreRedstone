@@ -10,7 +10,7 @@ import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
 import org.jetbrains.annotations.NotNull;
-import org.lycorecocafe.cmrs.blocks.Triode3BlockBase;
+import org.lycorecocafe.cmrs.blocks.base.Triode3BlockBase;
 
 public class NORGateBlock extends Triode3BlockBase {
     public static final BooleanProperty LEFT_INPUT = BooleanProperty.create("left_input");
