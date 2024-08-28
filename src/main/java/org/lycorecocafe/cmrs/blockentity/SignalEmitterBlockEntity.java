@@ -14,8 +14,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import org.jetbrains.annotations.Nullable;
 import org.lycorecocafe.cmrs.client.gui.menu.SignalEmitterMenu;
-import org.lycorecocafe.cmrs.handler.SignalHandler;
 import org.lycorecocafe.cmrs.init.BlockEntitiesInit;
+import org.lycorecocafe.cmrs.utils.game.SignalFinder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -44,7 +44,7 @@ public class SignalEmitterBlockEntity extends BlockEntity implements MenuProvide
     public void onRedstoneSignalChanged(Level world, boolean isPowered) {
         if (this.powered != isPowered) {
             this.powered = isPowered;
-            SignalHandler.setReceiverPowered(world, getMatchReceivers(), isPowered);
+            SignalFinder.setReceiverPowered(world, getMatchReceivers(), isPowered);
             setChanged();
         }
     }

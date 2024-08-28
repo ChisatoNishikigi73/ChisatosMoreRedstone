@@ -1,4 +1,4 @@
-package org.lycorecocafe.cmrs.handler;
+package org.lycorecocafe.cmrs.utils.game;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.world.level.Level;
@@ -12,7 +12,7 @@ import org.lycorecocafe.cmrs.network.SignalReceiverPacket;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SignalHandler {
+public class SignalFinder {
 
     public static List<BlockPos> findReceiversInRange(SignalEmitterBlockEntity emitter, int range) {
         Level world = emitter.getLevel();

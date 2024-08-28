@@ -7,7 +7,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraftforge.network.NetworkEvent;
 import org.lycorecocafe.cmrs.blockentity.SignalEmitterBlockEntity;
-import org.lycorecocafe.cmrs.handler.SignalHandler;
+import org.lycorecocafe.cmrs.utils.game.SignalFinder;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -46,7 +46,7 @@ public class ApplySignalPaket {
                 Level world = player.level;
                 BlockEntity blockEntity = world.getBlockEntity(emitterPos);
                 if (blockEntity instanceof SignalEmitterBlockEntity emitter) {
-                    SignalHandler.applySignal(emitter, receiverPos);
+                    SignalFinder.applySignal(emitter, receiverPos);
                 }
             }
         });

@@ -14,10 +14,10 @@ import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.client.gui.RadioSlider;
 import org.lycorecocafe.cmrs.client.gui.menu.SignalEmitterMenu;
-import org.lycorecocafe.cmrs.handler.SignalHandler;
 import org.lycorecocafe.cmrs.network.ApplySignalPaket;
 import org.lycorecocafe.cmrs.network.ClearSignalPaket;
 import org.lycorecocafe.cmrs.network.SignalEmitterPacket;
+import org.lycorecocafe.cmrs.utils.game.SignalFinder;
 import org.lycorecocafe.cmrs.utils.game.result.PositionsComparisonResult;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
         this.addRenderableWidget(this.radioSlider);
 
         this.sendButton = new Button(centerX - 50, centerY + 25, 100, 20, Component.literal("Find Receiver"), button -> {
-            List<BlockPos> positions = SignalHandler.findReceiversInRange(this.menu.getBlockEntity(), range);
+            List<BlockPos> positions = SignalFinder.findReceiversInRange(this.menu.getBlockEntity(), range);
 
             PositionsComparisonResult result = new PositionsComparisonResult().compare(positions, menu.getBlockEntity().getMatchReceivers());
             if (!result.getRemoved().isEmpty()) {
@@ -75,7 +75,7 @@ public class SignalEmitterScreen extends AbstractContainerScreen<SignalEmitterMe
             }
 
             menu.getBlockEntity().setMatchReceivers(positions);
-            SignalHandler.applySignal(menu.getBlockEntity(), positions);
+            SignalFinder.applySignal(menu.getBlockEntity(), positions);
             CMRS.CHANNEL.sendToServer(new ApplySignalPaket(menu.getBlockEntity().getBlockPos(), positions));
             CMRS.CHANNEL.sendToServer(new SignalEmitterPacket(menu.getBlockEntity().getBlockPos(), radioSlider.getHz(), menu.getBlockEntity().getMatchReceivers()));
 
