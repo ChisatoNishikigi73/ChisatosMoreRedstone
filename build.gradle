@@ -63,8 +63,7 @@ minecraft {
 
         client {
             property 'forge.enabledGameTestNamespaces', mod_id // 配置客户端运行配置
-            args '--username', 'Player_' + UUID.randomUUID().toString().substring(0, 8)
-            args '--offline'
+            args '--username', 'Player_' + UUID.randomUUID().toString().substring(0, 2)
         }
 
         server {
@@ -97,12 +96,16 @@ mixin {
 repositories {
     //m/aven { url "https://cubicinterpolation.net/maven/" }
     // 在此处添加依赖项的 Maven 仓库
+    mavenCentral()
 }
 
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}" // 指定使用的 Minecraft 版本
     implementation "org.spongepowered:mixin:0.8.5-SNAPSHOT" // 添加 Mixin 依赖项
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor' // Mixin
+//    implementation 'com.github.umjammer:jlayer:1.0.3'
+//    implementation 'org.jcraft:jorbis:0.0.17'
+//    implementation(group: 'ws.schild', name: 'jave-all-deps', version: '3.5.0')
 }
 
 // 配置资源处理任务，以便在指定资源目标中扩展所有声明的替换属性
