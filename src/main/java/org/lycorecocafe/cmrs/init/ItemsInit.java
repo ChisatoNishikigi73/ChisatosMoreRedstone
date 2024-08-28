@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.lycorecocafe.cmrs.CMRS;
+import org.lycorecocafe.cmrs.items.EntityRecorderItem;
 import org.lycorecocafe.cmrs.items.RedstoneDetectorItem;
 
 public class ItemsInit {
@@ -25,6 +26,8 @@ public class ItemsInit {
     public static final RegistryObject<Item> SIGNAL_EMITTER_ITEM = ITEMS.register("signal_emitter", () -> new BlockItem(BlocksInit.SIGNAL_EMITTER.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
     public static final RegistryObject<Item> SIGNAL_RECEIVER_ITEM = ITEMS.register("signal_receiver", () -> new BlockItem(BlocksInit.SIGNAL_RECEIVER.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
     public static final RegistryObject<Item> MUSIC_BOX_ITEM = ITEMS.register("music_box", () -> new BlockItem(BlocksInit.MUSIC_BOX.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
+    public static final RegistryObject<Item> HOLO_DISPLAY_TERMINAL_ITEM = ITEMS.register("holo_display_terminal", () -> new BlockItem(BlocksInit.HOLO_DISPLAY_TERMINAL.get(), new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
+    public static final RegistryObject<Item> ENTITY_RECORDER = ITEMS.register("entity_recorder", () -> new EntityRecorderItem(new Item.Properties().tab(CreativeModeTabInit.CMRS_TAB)));
 
     public static void register(IEventBus eventBus) {
         ITEMS.register(eventBus);

@@ -11,5 +11,7 @@
   "block.cmrs.signal_emitter": "红石信号发射终端",
   "block.cmrs.signal_receiver": "红石信号接收器",
   "block.cmrs.music_box": "音乐盒",
-  "item.cmrs.redstone_detector": "红石网络探测器"
+  "block.cmrs.holo_display_terminal": "全息投影终端",
+  "item.cmrs.redstone_detector": "红石网络探测器",
+  "item.cmrs.entity_recorder": "生物信息记录器"
 }

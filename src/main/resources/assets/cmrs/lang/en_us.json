@@ -11,5 +11,7 @@
   "block.cmrs.signal_emitter": "Signal Emitter",
   "block.cmrs.signal_receiver": "Signal Receiver",
   "block.cmrs.music_box": "Music Box",
-  "item.cmrs.redstone_detector": "Redstone Network Detector"
+  "block.cmrs.holo_display_terminal": "Hologram Projector Terminal",
+  "item.cmrs.redstone_detector": "Redstone Network Detector",
+  "item.cmrs.entity_recorder": "Entity Recorder"
 }

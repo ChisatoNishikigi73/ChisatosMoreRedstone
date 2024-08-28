@@ -2,6 +2,7 @@ package org.lycorecocafe.cmrs;
 
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
+import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
@@ -12,6 +13,7 @@ import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
 import net.minecraftforge.network.simple.SimpleChannel;
+import org.lycorecocafe.cmrs.client.gui.screen.HoloDisplayTerminalScreen;
 import org.lycorecocafe.cmrs.client.gui.screen.MusicBoxScreen;
 import org.lycorecocafe.cmrs.client.gui.screen.SignalEmitterScreen;
 import org.lycorecocafe.cmrs.client.gui.screen.SignalReceiverScreen;
@@ -20,6 +22,7 @@ import org.lycorecocafe.cmrs.init.BlocksInit;
 import org.lycorecocafe.cmrs.init.ItemsInit;
 import org.lycorecocafe.cmrs.init.MenuInit;
 import org.lycorecocafe.cmrs.network.*;
+import org.lycorecocafe.cmrs.render.HoloDisplayTerminalEntityRenderer;
 import org.slf4j.Logger;
 
 @Mod(CMRS.MODID)
@@ -47,6 +50,8 @@ public class CMRS {
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
+        LOGGER.info("HELLO FROM CHISATO~");
+
         int index = 0;
         CHANNEL.registerMessage(index++, SignalEmitterPacket.class, SignalEmitterPacket::toBytes, SignalEmitterPacket::new, SignalEmitterPacket::handle);
         CHANNEL.registerMessage(index++, SignalReceiverPacket.class, SignalReceiverPacket::toBytes, SignalReceiverPacket::new, SignalReceiverPacket::handle);
@@ -57,11 +62,25 @@ public class CMRS {
         CHANNEL.registerMessage(index++, MusicPlayerDownloadMusicNotify.class, MusicPlayerDownloadMusicNotify::toBytes, MusicPlayerDownloadMusicNotify::new, MusicPlayerDownloadMusicNotify::handle);
         CHANNEL.registerMessage(index++, MusicPlayerStatusChangedPacket.class, MusicPlayerStatusChangedPacket::toBytes, MusicPlayerStatusChangedPacket::new, MusicPlayerStatusChangedPacket::handle);
         CHANNEL.registerMessage(index++, MusicPlayerPlayNotify.class, MusicPlayerPlayNotify::toBytes, MusicPlayerPlayNotify::new, MusicPlayerPlayNotify::handle);
+        CHANNEL.registerMessage(index++, HoloDisplayTerminalChangePaket.class, HoloDisplayTerminalChangePaket::toBytes, HoloDisplayTerminalChangePaket::new, HoloDisplayTerminalChangePaket::handle);
+        CHANNEL.registerMessage(index++, HoloDisplayTerminalChangeNotify.class, HoloDisplayTerminalChangeNotify::toBytes, HoloDisplayTerminalChangeNotify::new, HoloDisplayTerminalChangeNotify::handle);
+        CHANNEL.registerMessage(index++, LoadChunkRequestPacket.class, LoadChunkRequestPacket::toBytes, LoadChunkRequestPacket::new, LoadChunkRequestPacket::handle);
+        CHANNEL.registerMessage(index++, ChunkDataSyncPacket.class, ChunkDataSyncPacket::toBytes, ChunkDataSyncPacket::new, ChunkDataSyncPacket::handle);
+
 
         MenuScreens.register(MenuInit.SIGNAL_EMITTER_MENU.get(), SignalEmitterScreen::new);
         MenuScreens.register(MenuInit.SIGNAL_RECEIVER_MENU.get(), SignalReceiverScreen::new);
         MenuScreens.register(MenuInit.MUSIC_BOX_MENU.get(), MusicBoxScreen::new);
-        LOGGER.info("HELLO FROM CHISATO~");
+        MenuScreens.register(MenuInit.HOLO_DISPLAY_TERMINAL_MENU.get(), HoloDisplayTerminalScreen::new);
+
+        BlockEntityRenderers.register(BlockEntitiesInit.HOLO_DISPLAY_TERMINAL_BE.get(), HoloDisplayTerminalEntityRenderer::new);
+
+//        EntityRenderers.register(BlockEntitiesInit.HOLO_PLAYER_E.get(), HoloPlayerEntityRenderer::new);
+
+//        ItemProperties.register(ItemsInit.ENTITY_RECORDER.get(), new ResourceLocation("filled"), (stack, level, entity, seed)
+//                -> EntityRecorderItem.hasStoredEntityData(stack) ? 1.0F : 0.0F);
+
+
 
 //        if (Config.logDirtBlock)
 //            LOGGER.info("DIRT BLOCK >> {}", ForgeRegistries.BLOCKS.getKey(Blocks.DIRT));

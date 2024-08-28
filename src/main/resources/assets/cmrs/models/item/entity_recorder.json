@@ -1,0 +1,14 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "cmrs:item/entity_recorder"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "filled": 1.0
+      },
+      "model": "cmrs:item/entity_recorder_filled"
+    }
+  ]
+}

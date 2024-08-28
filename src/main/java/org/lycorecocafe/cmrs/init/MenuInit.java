@@ -7,6 +7,7 @@ import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
 import org.lycorecocafe.cmrs.CMRS;
+import org.lycorecocafe.cmrs.client.gui.menu.HoloDisplayTerminalMenu;
 import org.lycorecocafe.cmrs.client.gui.menu.MusicBoxMenu;
 import org.lycorecocafe.cmrs.client.gui.menu.SignalEmitterMenu;
 import org.lycorecocafe.cmrs.client.gui.menu.SignalReceiverMenu;
@@ -28,5 +29,7 @@ public class MenuInit {
     public static final RegistryObject<MenuType<MusicBoxMenu>> MUSIC_BOX_MENU = MENUS.register("music_box_menu",
             () -> IForgeMenuType.create(MusicBoxMenu::new));
 
+    public static final RegistryObject<MenuType<HoloDisplayTerminalMenu>> HOLO_DISPLAY_TERMINAL_MENU = MENUS.register("holo_display_terminal_menu",
+            () -> IForgeMenuType.create(HoloDisplayTerminalMenu::new));
 
 }

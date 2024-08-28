@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "cmrs:block/holo_display_terminal"
+    },
+    "facing=east": {
+      "model": "cmrs:block/holo_display_terminal",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "cmrs:block/holo_display_terminal",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "cmrs:block/holo_display_terminal",
+      "y": 270
+    }
+  }
+}
