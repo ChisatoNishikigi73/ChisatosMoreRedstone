@@ -2,7 +2,6 @@ package org.lycorecocafe.cmrs.blockentity.holo;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.ClientLevel;
-import net.minecraft.client.player.AbstractClientPlayer;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.FriendlyByteBuf;
@@ -121,13 +120,14 @@ public class HoloDisplayTerminalBlockEntity extends BlockEntity implements MenuP
         return new BlockState[0][0][0];
     }
 
-    public AbstractClientPlayer getPlayerByName(String playerName) {
+
+    public Player getPlayerByName(String playerName) {
         if (!((mode.equals(MODE.TRACKER) || mode.equals(MODE.OFFLINE)) && this.getLevel().isClientSide) || Objects.equals(playerName, "") || playerName == null)
             return null;
 //        System.out.println("Getting player by name: " + playerName);
         ClientLevel clientWorld = Minecraft.getInstance().level;
         if (clientWorld != null) {
-            for (AbstractClientPlayer player : clientWorld.players()) {
+            for (Player player : clientWorld.players()) {
                 if (player.getName().getString().equals(playerName)) {
                     updateMode(MODE.TRACKER);
                     return player;

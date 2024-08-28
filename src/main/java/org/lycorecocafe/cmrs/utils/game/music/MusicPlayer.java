@@ -12,6 +12,8 @@ import net.minecraft.sounds.SoundEvent;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 import org.lycorecocafe.cmrs.mixin.SoundEngineHelper;
@@ -54,6 +56,7 @@ public class MusicPlayer {
         return new ByteArrayInputStream(data);
     }
 
+    @OnlyIn(Dist.CLIENT)
     public void play() {
         if (blockEntity instanceof MusicBoxBlockEntity) {
             if (blockEntity.getStatus().equals(STATUS.ERROR) || blockEntity.getStatus().equals(STATUS.NONE) || blockEntity.getStatus().equals(STATUS.DOWNLOADING))
@@ -66,6 +69,7 @@ public class MusicPlayer {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public void stopSound() {
         if (this.soundInstance != null) {
             SoundManager soundManager = Minecraft.getInstance().getSoundManager();
@@ -76,6 +80,7 @@ public class MusicPlayer {
         }
     }
 
+    @OnlyIn(Dist.CLIENT)
     public void downloadMusic() {
         LOGGER.info("Downloading music[url={}] for Entity[{}]", blockEntity.getMusicUrl(), this.blockEntity.getBlockPos());
         if (blockEntity.getStatus().equals(STATUS.PLAYING)) {
@@ -96,6 +101,7 @@ public class MusicPlayer {
         CMRS.CHANNEL.sendToServer(new MusicPlayerStatusChangedPacket(blockEntity.getBlockPos(), getStatus()));
     }
 
+    @OnlyIn(Dist.CLIENT)
     private void playSoundFromStream() {
         SoundManager soundManager = Minecraft.getInstance().getSoundManager();
         SoundEngine soundEngine = ((SoundManagerMixin) soundManager).getSoundEngine();
@@ -156,6 +162,7 @@ public class MusicPlayer {
         this.musicData = null;
     }
 
+    @OnlyIn(Dist.CLIENT)
     private SimpleSoundInstance createDefaultSoundInstance(BlockEntity blockEntity) {
         ResourceLocation soundLocation = new ResourceLocation("cmrs", "cmrs-music-" + UUID.randomUUID());
         SoundEvent soundEvent = new SoundEvent(soundLocation);

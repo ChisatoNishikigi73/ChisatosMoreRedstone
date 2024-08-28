@@ -9,6 +9,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blockentity.MusicBoxBlockEntity;
 import org.lycorecocafe.cmrs.client.gui.menu.MusicBoxMenu;
@@ -17,6 +19,7 @@ import org.lycorecocafe.cmrs.network.MusicPlayerPlayPacket;
 import org.lycorecocafe.cmrs.utils.game.music.MusicPlayer;
 import org.slf4j.Logger;
 
+@OnlyIn(Dist.CLIENT)
 public class MusicBoxScreen extends AbstractContainerScreen<MusicBoxMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/signal_emitter.png");
     private static final Logger LOGGER = LogUtils.getLogger();

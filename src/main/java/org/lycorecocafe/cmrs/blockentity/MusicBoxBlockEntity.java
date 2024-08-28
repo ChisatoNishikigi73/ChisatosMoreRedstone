@@ -73,7 +73,9 @@ public class MusicBoxBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public void invalidateCaps() {
-        this.getMusicPlayer().stopSound(); // Stop music when invalidating capabilities
+        if (this.level != null && this.level.isClientSide) {
+            this.getMusicPlayer().stopSound(); // Stop music when invalidating capabilities
+        }
         final CapabilityDispatcher disp = getCapabilities();
         if (disp != null)
             disp.invalidate();

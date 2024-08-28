@@ -3,12 +3,17 @@ package org.lycorecocafe.cmrs;
 import com.mojang.logging.LogUtils;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.client.renderer.blockentity.BlockEntityRenderers;
+import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
+import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
+import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
@@ -21,6 +26,7 @@ import org.lycorecocafe.cmrs.init.BlockEntitiesInit;
 import org.lycorecocafe.cmrs.init.BlocksInit;
 import org.lycorecocafe.cmrs.init.ItemsInit;
 import org.lycorecocafe.cmrs.init.MenuInit;
+import org.lycorecocafe.cmrs.items.EntityRecorderItem;
 import org.lycorecocafe.cmrs.network.*;
 import org.lycorecocafe.cmrs.render.HoloDisplayTerminalEntityRenderer;
 import org.slf4j.Logger;
@@ -46,7 +52,20 @@ public class CMRS {
         MenuInit.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
+        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> modEventBus.addListener(this::clientSetup));
         MinecraftForge.EVENT_BUS.register(this);
+    }
+
+    @OnlyIn(Dist.CLIENT)
+    private void clientSetup(final FMLClientSetupEvent event) {
+        ItemProperties.register(ItemsInit.ENTITY_RECORDER.get(), new ResourceLocation("filled"), (stack, level, entity, seed)
+                -> EntityRecorderItem.hasStoredEntityData(stack) ? 1.0F : 0.0F);
+        BlockEntityRenderers.register(BlockEntitiesInit.HOLO_DISPLAY_TERMINAL_BE.get(), HoloDisplayTerminalEntityRenderer::new);
+
+        MenuScreens.register(MenuInit.SIGNAL_EMITTER_MENU.get(), SignalEmitterScreen::new);
+        MenuScreens.register(MenuInit.SIGNAL_RECEIVER_MENU.get(), SignalReceiverScreen::new);
+        MenuScreens.register(MenuInit.MUSIC_BOX_MENU.get(), MusicBoxScreen::new);
+        MenuScreens.register(MenuInit.HOLO_DISPLAY_TERMINAL_MENU.get(), HoloDisplayTerminalScreen::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -64,21 +83,12 @@ public class CMRS {
         CHANNEL.registerMessage(index++, MusicPlayerPlayNotify.class, MusicPlayerPlayNotify::toBytes, MusicPlayerPlayNotify::new, MusicPlayerPlayNotify::handle);
         CHANNEL.registerMessage(index++, HoloDisplayTerminalChangePaket.class, HoloDisplayTerminalChangePaket::toBytes, HoloDisplayTerminalChangePaket::new, HoloDisplayTerminalChangePaket::handle);
         CHANNEL.registerMessage(index++, HoloDisplayTerminalChangeNotify.class, HoloDisplayTerminalChangeNotify::toBytes, HoloDisplayTerminalChangeNotify::new, HoloDisplayTerminalChangeNotify::handle);
-        CHANNEL.registerMessage(index++, LoadChunkRequestPacket.class, LoadChunkRequestPacket::toBytes, LoadChunkRequestPacket::new, LoadChunkRequestPacket::handle);
-        CHANNEL.registerMessage(index++, ChunkDataSyncPacket.class, ChunkDataSyncPacket::toBytes, ChunkDataSyncPacket::new, ChunkDataSyncPacket::handle);
+//        CHANNEL.registerMessage(index++, LoadChunkRequestPacket.class, LoadChunkRequestPacket::toBytes, LoadChunkRequestPacket::new, LoadChunkRequestPacket::handle);
+//        CHANNEL.registerMessage(index++, ChunkDataSyncPacket.class, ChunkDataSyncPacket::toBytes, ChunkDataSyncPacket::new, ChunkDataSyncPacket::handle);
 
-
-        MenuScreens.register(MenuInit.SIGNAL_EMITTER_MENU.get(), SignalEmitterScreen::new);
-        MenuScreens.register(MenuInit.SIGNAL_RECEIVER_MENU.get(), SignalReceiverScreen::new);
-        MenuScreens.register(MenuInit.MUSIC_BOX_MENU.get(), MusicBoxScreen::new);
-        MenuScreens.register(MenuInit.HOLO_DISPLAY_TERMINAL_MENU.get(), HoloDisplayTerminalScreen::new);
-
-        BlockEntityRenderers.register(BlockEntitiesInit.HOLO_DISPLAY_TERMINAL_BE.get(), HoloDisplayTerminalEntityRenderer::new);
 
 //        EntityRenderers.register(BlockEntitiesInit.HOLO_PLAYER_E.get(), HoloPlayerEntityRenderer::new);
 
-//        ItemProperties.register(ItemsInit.ENTITY_RECORDER.get(), new ResourceLocation("filled"), (stack, level, entity, seed)
-//                -> EntityRecorderItem.hasStoredEntityData(stack) ? 1.0F : 0.0F);
 
 
 

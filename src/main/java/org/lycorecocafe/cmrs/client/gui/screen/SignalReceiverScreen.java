@@ -8,6 +8,8 @@ import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.client.gui.RadioSlider;
 import org.lycorecocafe.cmrs.client.gui.menu.SignalReceiverMenu;
@@ -17,6 +19,7 @@ import java.util.Objects;
 
 //TODO: Maintain long-term consistency between Receiver and Transmitter (update frequency followed by updates)
 //TODO: Single upstream mode and multiple upstream modes
+@OnlyIn(Dist.CLIENT)
 public class SignalReceiverScreen extends AbstractContainerScreen<SignalReceiverMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/signal_receiver.png");
     //TODO: Put it in static plz

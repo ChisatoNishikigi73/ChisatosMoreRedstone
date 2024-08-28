@@ -17,6 +17,8 @@ import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.phys.AABB;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.lycorecocafe.cmrs.blockentity.holo.HoloDisplayTerminalBlockEntity;
@@ -26,6 +28,7 @@ import java.util.List;
 
 import static org.lycorecocafe.cmrs.blocks.HoloDisplayTerminalBlock.FACING;
 
+@OnlyIn(Dist.CLIENT)
 public class HoloDisplayTerminalEntityRenderer implements BlockEntityRenderer<HoloDisplayTerminalBlockEntity> {
 
     public static final ModelProperty<BlockState> DISPLAY_BLOCK_STATE = new ModelProperty<>();
@@ -124,7 +127,7 @@ public class HoloDisplayTerminalEntityRenderer implements BlockEntityRenderer<Ho
         poseStack.pushPose();
 
         // 使用游戏内时间和 partialTicks 来平滑旋转
-        float rotation = (blockEntity.getLevel().getGameTime() + partialTicks) * rotateSpeed % 360;
+        float rotation = (blockEntity.getLevel().getGameTime() + partialTicks) * 0.25f % 360;
 
         // 将文本位置平移到方块上方
         poseStack.translate(0.5, (double) 10 / 16, 0.5); // 平移到方块的中心上方

@@ -11,6 +11,8 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Inventory;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blockentity.holo.HoloDisplayTerminalBlockEntity;
 import org.lycorecocafe.cmrs.client.gui.menu.HoloDisplayTerminalMenu;
@@ -24,6 +26,7 @@ import java.util.stream.Collectors;
 import static org.lycorecocafe.cmrs.CMRS.CHANNEL;
 import static org.lycorecocafe.cmrs.blockentity.holo.HoloDisplayTerminalBlockEntity.MODE;
 
+@OnlyIn(Dist.CLIENT)
 public class HoloDisplayTerminalScreen extends AbstractContainerScreen<HoloDisplayTerminalMenu> {
     private static final ResourceLocation GUI_TEXTURE = new ResourceLocation(CMRS.MODID, "textures/gui/holo_control.png");
     //Area mode

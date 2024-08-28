@@ -12,6 +12,8 @@ import net.minecraft.client.sounds.*;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.phys.Vec3;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.mixin.SoundBufferLibraryHelper;
 import org.lycorecocafe.cmrs.mixin.SoundEngineHelper;
 import org.slf4j.Logger;
@@ -27,6 +29,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.CompletableFuture;
 
+@OnlyIn(Dist.CLIENT)
 @Mixin(SoundEngine.class)
 public class SoundEngineMixin implements SoundEngineHelper {
     @Final

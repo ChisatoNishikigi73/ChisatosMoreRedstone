@@ -1,11 +1,9 @@
 package org.lycorecocafe.cmrs.items;
 
 import net.minecraft.ChatFormatting;
-import net.minecraft.client.renderer.item.ItemProperties;
 import net.minecraft.core.BlockPos;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
 import net.minecraft.world.entity.EntityType;
@@ -17,6 +15,8 @@ import net.minecraft.world.item.TooltipFlag;
 import net.minecraft.world.item.context.UseOnContext;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.entity.BlockEntity;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.CMRS;
 import org.lycorecocafe.cmrs.blockentity.holo.HoloDisplayTerminalBlockEntity;
 import org.lycorecocafe.cmrs.network.HoloDisplayTerminalChangePaket;
@@ -26,10 +26,6 @@ import java.util.List;
 public class EntityRecorderItem extends Item {
     public EntityRecorderItem(Item.Properties properties) {
         super(properties);
-
-        // 注册属性覆盖，用于根据 NBT 数据动态切换材质
-        ItemProperties.register(this, new ResourceLocation("filled"), (stack, level, entity, seed)
-                -> hasStoredEntityData(stack) ? 1.0F : 0.0F);
     }
 
     // 检查是否有存储的实体数据
@@ -68,6 +64,7 @@ public class EntityRecorderItem extends Item {
         return InteractionResult.PASS;
     }
 
+    @OnlyIn(Dist.CLIENT)
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level world = context.getLevel();
@@ -75,7 +72,7 @@ public class EntityRecorderItem extends Item {
         Player player = context.getPlayer();
         ItemStack itemStack = context.getItemInHand();
 
-        if (!world.isClientSide && player != null) {
+        if (world.isClientSide && player != null) {
             BlockEntity blockEntity = world.getBlockEntity(pos);
 
             if (blockEntity instanceof HoloDisplayTerminalBlockEntity holoEntity) {

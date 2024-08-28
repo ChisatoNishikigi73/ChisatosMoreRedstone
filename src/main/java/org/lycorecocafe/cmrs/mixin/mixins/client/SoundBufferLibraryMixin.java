@@ -6,6 +6,8 @@ import net.minecraft.Util;
 import net.minecraft.client.sounds.AudioStream;
 import net.minecraft.client.sounds.LoopingAudioStream;
 import net.minecraft.client.sounds.SoundBufferLibrary;
+import net.minecraftforge.api.distmarker.Dist;
+import net.minecraftforge.api.distmarker.OnlyIn;
 import org.lycorecocafe.cmrs.mixin.SoundBufferLibraryHelper;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
@@ -16,6 +18,7 @@ import java.nio.ByteBuffer;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
+@OnlyIn(Dist.CLIENT)
 @Mixin(SoundBufferLibrary.class)
 public class SoundBufferLibraryMixin implements SoundBufferLibraryHelper {
 
