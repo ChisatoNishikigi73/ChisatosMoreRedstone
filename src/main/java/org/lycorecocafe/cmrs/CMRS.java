@@ -8,12 +8,9 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.api.distmarker.OnlyIn;
 import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.event.server.ServerStartingEvent;
 import net.minecraftforge.eventbus.api.IEventBus;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
 import net.minecraftforge.fml.DistExecutor;
 import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.event.lifecycle.FMLClientSetupEvent;
 import net.minecraftforge.fml.event.lifecycle.FMLCommonSetupEvent;
 import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
 import net.minecraftforge.network.NetworkRegistry;
@@ -45,27 +42,12 @@ public class CMRS {
 
     public CMRS() {
         IEventBus modEventBus = FMLJavaModLoadingContext.get().getModEventBus();
-
         BlocksInit.register(modEventBus);
         BlockEntitiesInit.register(modEventBus);
         ItemsInit.register(modEventBus);
         MenuInit.register(modEventBus);
-
         modEventBus.addListener(this::commonSetup);
-        DistExecutor.safeRunWhenOn(Dist.CLIENT, () -> () -> modEventBus.addListener(this::clientSetup));
         MinecraftForge.EVENT_BUS.register(this);
-    }
-
-    @OnlyIn(Dist.CLIENT)
-    private void clientSetup(final FMLClientSetupEvent event) {
-        ItemProperties.register(ItemsInit.ENTITY_RECORDER.get(), new ResourceLocation("filled"), (stack, level, entity, seed)
-                -> EntityRecorderItem.hasStoredEntityData(stack) ? 1.0F : 0.0F);
-        BlockEntityRenderers.register(BlockEntitiesInit.HOLO_DISPLAY_TERMINAL_BE.get(), HoloDisplayTerminalEntityRenderer::new);
-
-        MenuScreens.register(MenuInit.SIGNAL_EMITTER_MENU.get(), SignalEmitterScreen::new);
-        MenuScreens.register(MenuInit.SIGNAL_RECEIVER_MENU.get(), SignalReceiverScreen::new);
-        MenuScreens.register(MenuInit.MUSIC_BOX_MENU.get(), MusicBoxScreen::new);
-        MenuScreens.register(MenuInit.HOLO_DISPLAY_TERMINAL_MENU.get(), HoloDisplayTerminalScreen::new);
     }
 
     private void commonSetup(final FMLCommonSetupEvent event) {
@@ -85,6 +67,7 @@ public class CMRS {
         CHANNEL.registerMessage(index++, HoloDisplayTerminalChangeNotify.class, HoloDisplayTerminalChangeNotify::toBytes, HoloDisplayTerminalChangeNotify::new, HoloDisplayTerminalChangeNotify::handle);
 //        CHANNEL.registerMessage(index++, LoadChunkRequestPacket.class, LoadChunkRequestPacket::toBytes, LoadChunkRequestPacket::new, LoadChunkRequestPacket::handle);
 //        CHANNEL.registerMessage(index++, ChunkDataSyncPacket.class, ChunkDataSyncPacket::toBytes, ChunkDataSyncPacket::new, ChunkDataSyncPacket::handle);
+        DistExecutor.unsafeRunWhenOn(Dist.CLIENT, () -> this::clientSetup);
 
 
 //        EntityRenderers.register(BlockEntitiesInit.HOLO_PLAYER_E.get(), HoloPlayerEntityRenderer::new);
@@ -100,7 +83,15 @@ public class CMRS {
         //Config.items.forEach((item) -> LOGGER.info("ITEM >> {}", item.toString()));
     }
 
-    @SubscribeEvent
-    public void onServerStarting(ServerStartingEvent event) {
+    @OnlyIn(Dist.CLIENT)
+    private void clientSetup() {
+        ItemProperties.register(ItemsInit.ENTITY_RECORDER.get(), new ResourceLocation("filled"), (stack, level, entity, seed)
+                -> EntityRecorderItem.hasStoredEntityData(stack) ? 1.0F : 0.0F);
+        BlockEntityRenderers.register(BlockEntitiesInit.HOLO_DISPLAY_TERMINAL_BE.get(), HoloDisplayTerminalEntityRenderer::new);
+
+        MenuScreens.register(MenuInit.SIGNAL_EMITTER_MENU.get(), SignalEmitterScreen::new);
+        MenuScreens.register(MenuInit.SIGNAL_RECEIVER_MENU.get(), SignalReceiverScreen::new);
+        MenuScreens.register(MenuInit.MUSIC_BOX_MENU.get(), MusicBoxScreen::new);
+        MenuScreens.register(MenuInit.HOLO_DISPLAY_TERMINAL_MENU.get(), HoloDisplayTerminalScreen::new);
     }
 }
